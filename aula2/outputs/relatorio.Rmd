@@ -1,0 +1,13 @@
+---
+title: "relatorio_porta_dos_fundos"
+author: "F"
+date: "31 de janeiro de 2017"
+output: pdf_document
+---
+
+## Trabalho com textos
+
+# Regex
+
+- **Reg**ular **ex**pressions são sequências de caractéres
+
