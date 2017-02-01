@@ -1,0 +1,214 @@
+---
+title: "pu.lubridate"
+author: "Athos Damiani"
+date: "31 de janeiro de 2017"
+output: html_document
+---
+
+Resumo do que aprenderemos:
+
+- transformar character de diversos formatos em data.
+- transformar data em character de diversos formatos.
+- extrair informações das datas `y m d h m s`
+- funções úteis (`today()`, `now()`, etc)
+- timezones
+- operações aritméticas com datas
+- gerar datas
+
+
+## Bancos de dados
+
+```{r, warning=FALSE, message=FALSE}
+library(readr)
+library(openxlsx)
+library(gdata)
+library(dplyr)
+
+# Abre planilhas em csv que usem como separado decimal o caractér "."
+legendas_pt_1 <- readr::read_csv(file = "C:/Users/Athos/Documents/GitHub/slides2017/aula2/inputs/legendas_pt_1.csv")
+
+# Abre planilhas em csv que usem como separado decimal o caractér ","
+legendas_pt_2 <- readr::read_csv2(file = "C:/Users/Athos/Documents/GitHub/slides2017/aula2/inputs/legendas_pt_2.csv")
+
+# Abre planilhas em xlsx que
+comentarios_pt_1 <- readxl::read_excel(path = "C:/Users/Athos/Documents/GitHub/slides2017/aula2/inputs/comentarios_pt_1.xlsx")
+
+# Abre planilhas em xls
+#comentarios_pt_2 <- gdata::read.xls(file = "inputs/comentarios_pt_2.xlsx")
+
+#empilha as linhas de um data.frame que tem as mesmas colunas na mesma ordem
+legendas <- rbind(legendas_pt_1, legendas_pt_2)
+
+#comentarios <- rbind(comentarios_pt_1, comentarios_pt_2)
+```
+
+```{r}
+library(lubridate)
+```
+
+## Transformar `character` em `date`/`datetime`
+
+Data e hora podem ser apresentadas com diversas disposições das suas informações. A disposição mais completa é 
+
+**YYYY-MM-DD HH:mm:SS.SSS TTT**
+
+em que **T** é o fuso horário (timezone). 
+
+Muitas vezes só temos parte dessas informações. Ora temos apenas a data (`"2017-01-31"`), ora temos apenas o tempo (`"23:59:59"`) e assim por diante. O lubridate possui funções específicas para cada conjunto de informações presentes. Por exemplo: usaremos a função `dmy()` se tivermos o dia, mês e ano, respectivamente.
+
+```{r}
+datas <- c("31/01/2017", "01/01/1900")
+dmy(datas)
+```
+
+No banco de dados dos comentários do vídeo do YouTube o formato do campo `publicacao` está bem parecido com a formato completo, com algumas letras a mais no meio. Para transformarmos em objetos data/hora precisaremos usar a função `ymd_hms()` porque é nesta ordem que estão dispostas as informações e o lubridate é bem robusto à sujeiras no texto.
+
+```{r}
+comentarios_pt_1 %>%
+  mutate(publicacao_data_hora = ymd_hms(publicacao)) %>%
+  select(publicacao, publicacao_data_hora) %>%
+  head
+```
+
+Além de `dmy()` e `ymd_hms()` existem tantas outras variações de ordens e presenças de informações, como `mdy()`, `ymd()`, `dmy_hm()` e etc.
+
+
+## Transformar `date`/`datetime` em `character`
+
+Para transformar um objeto data/hora em um texto com formato específico usamos a função `format()`.
+
+**Exemplo**
+
+```{r}
+publicacao_data_hora <- ymd_hms(comentarios_pt_1$publicacao)[1:3]
+
+publicacao_data_hora
+format(publicacao_data_hora, "%d/%m/%Y")
+```
+
+Para passar o formato desejado basta especificar o local das informações dentro do texto. Esse local tem sempre o prefixo `%` seguido de uma letra que identifica a informação desejada. Por exemplo, `%d` irá ser substituído pelo respectivo valor do dia e `%m` pelo valor do mês.
+
+Existem uma série de letras que trazem informações diferentes, a lista completa dá para encontrar em `?format.POSIXct`. Abaixo adiantamos uma lista com os mais comuns:
+
+```{r, echo=FALSE}
+data.frame(`código` = c("%a",
+                        "%b",
+                        "%Y",
+                        "%m",
+                        "%d",
+                        "%H",
+                        "%M",
+                        "%S",
+                        "%U"),
+           `informação` = c("Dia da semana abreviado",
+                            "Nome do mês abreviado",
+                            "Ano AAAA",
+                            "Mês MM",
+                            "Dia DD",
+                            "Hora HH",
+                            "Minutos MM",
+                            "Segundos SS",
+                            "Semana do ano (de 0 a 53)"),
+           `exemplo` = c("dom, sex, qua",
+                         "jan, dez, fev",
+                         "2017",
+                         "12",
+                         "31",
+                         "23",
+                         "59",
+                         "59",
+                         "42")) %>%
+  knitr::kable()
+```
+
+
+**Outros exemplos:**
+
+```{r, echo=FALSE}
+comentarios_pt_1 %>%
+  mutate(publicacao_data_hora = ymd_hms(publicacao),
+         `%Y-%m` = format(publicacao_data_hora, "%Y-%m"),
+         `%b%y` = format(publicacao_data_hora, "%b%y"),
+         `%A, %d de %B de %Y` = format(publicacao_data_hora, "%A, %d de %B de %Y")) %>%
+  select(publicacao_data_hora, contains("%")) %>%
+  head %>%
+  knitr::kable()
+```
+
+
+## Extrair e alterar informações de datas
+
+O lubridate tem funções específicas para extrair as informações de um objeto data/hora.
+
+```{r}
+day(publicacao_data_hora)
+week(publicacao_data_hora)
+month(publicacao_data_hora)
+year(publicacao_data_hora)
+
+hour(publicacao_data_hora)
+minute(publicacao_data_hora)
+second(publicacao_data_hora)
+```
+
+O lubridate também permite que você ajuste datas e horas no fino:
+
+```{r}
+day(publicacao_data_hora) <- c(1, 2, 3)
+hour(publicacao_data_hora) <- c(6, 18, 23)
+```
+
+## `floor_date`
+
+
+
+
+## Outras funções úteis
+
+- `today()` retorna a data de hoje.
+- `now()` retorna a data e a hora de agora.
+- `round_date()`/`ceiling_date()` funcionam similar ao `floor_date()` com a diferença de arredondar para a data mais próxima e para a maior data respectivamente.
+- `leap_year()` testa se o ano é bissexto.
+- `am()` testa se a data é antes ou depois do meio dia.
+
+
+## Soma e subtração entre datas
+
+O lubridate faz soma e subtração de forma simples e intuitiva. 
+
+Para somar e subtrair valores constantes, utilizamos as funções `seconds()`, `minutes()`, `days()`, `weeks()`,  `months()` e `years()`.
+
+**Exemplo**
+
+```{r}
+publicacao_data_hora
+publicacao_data_hora + days(1)
+publicacao_data_hora - years(3)
+```
+
+Também conseguimos calcular a diferença entre duas datas.
+
+** Exemplo**
+
+```{r}
+publicacao_data_hora - publicacao_data_hora 
+publicacao_data_hora - ymd_hms("1900-01-01 00:00:00")
+```
+
+
+## Gerar datas
+
+Para gerar uma grade de datas regulares nós utilizamos a função `seq()` e especificamos 
+
+ - o período (com as funções do lubridate); e
+ - o intervalo entre as datas (por hora, por dia, por semana, etc.).
+
+**Exemplo**
+
+```{r}
+seq(ymd_hms('2017-01-15 10:00:00'), ymd_hms('2017-01-15 18:00:00'), by = '1 hour')
+seq(ymd_hms('2017-01-15 10:00:00'), ymd_hms('2017-01-18 18:00:00'), by = '1 day')
+seq(ymd('2017-01-15'), ymd('2017-02-15'), by = '1 week')
+seq(ymd('2012-04-07'), ymd('2013-03-22'), by = '2 week')
+```
+
