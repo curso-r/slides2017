@@ -158,9 +158,22 @@ day(publicacao_data_hora) <- c(1, 2, 3)
 hour(publicacao_data_hora) <- c(6, 18, 23)
 ```
 
-## `floor_date`
+## função `floor_date()`
 
+Vale um destaque na função `floor_date()` pela sua utilidade nas tarefas de montar gráficos e demais análises de dados.
 
+Ela funciona como o `floor()` para números, ou seja, arredonda para baixo as datas, mas com uma diferença: é possível especificar em qual unidade as datas serão arredondadas. Melhor jeito de explicar é por meio de exemplos:
+
+```{r}
+floor_date(publicacao_data_hora, unit = "2 hours")
+floor_date(publicacao_data_hora, unit = "1 day")
+floor_date(publicacao_data_hora, unit = "1 week")
+
+floor_date(ymd(c("2017-03-01", "2017-08-23")), unit = "bimonth")
+floor_date(ymd(c("2017-03-01", "2017-08-23")), unit = "halfyear")
+```
+
+São funções especialmente úteis para sumarizar bancos de dados.
 
 
 ## Outras funções úteis
