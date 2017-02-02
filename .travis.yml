@@ -1,5 +1,3 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: R
 sudo: false
 cache: packages
@@ -10,4 +8,4 @@ before_script:
 
 script:
   - ./_build.sh
-- ./_deploy.sh
+  - ./_deploy.sh
