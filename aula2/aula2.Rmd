@@ -1,0 +1,768 @@
+---
+title: "aula2"
+author: "fernando"
+date: "2 de fevereiro de 2017"
+output: html_document
+---
+
+## Listas
+
+### como criar (parecido com criar um vetor)
+
+```{r}
+library(tibble)
+
+list(1,2,3)
+c(1,2,3)
+```
+
+### consegue juntar tipos diferentes
+
+- na lista os tipos se preservam, mas no vetor o booleano vira numero
+```{r}
+list(1, 20, TRUE)
+c(10, 20, TRUE)
+```
+
+- na lista os tipos se preservam, mas no vetor tudo vira string
+
+```{r}
+list(1, "a", TRUE)
+c(10, "a", TRUE)
+```
+
+### como nomear elementos
+
+```{r}
+list(numero_um = 1, numero_vinte = 20, verdadeiro = TRUE)
+```
+
+-também funciona com vetores
+
+```{r}
+c(numero_um = 1, numero_vinte = 20, verdadeiro = TRUE)
+```
+    
+### exemplo de lista complicada
+
+```{r}
+
+pedido <- list(pedido_id = 8001406,
+               pedido_registro = as.Date("2016-12-12"),
+               nome = "Athos", 
+               sobrenome = "Petri Damiani", 
+               cpf = "12345678900", 
+               email = "athos.damiani@gmail.com", 
+               profissao = "mosqueteiro",
+               qualidades = c("incrível", "impressionante"),
+               itens = list(
+                 list(descricao = "Ferrari", 
+                      frete = 0, 
+                      valor = 500000),
+                 list(descricao = "Dolly", 
+                      frete = 1.5, 
+                      valor = 3.90)
+               ), 
+               endereco = list(entrega = list(logradouro = "Rua da Glória", 
+                                              numero = "123",
+                                              complemento = "apto 71"),
+                               cobranca = list(logradouro = "Rua Jose de Oliveira Coutinho",
+                                               numero = "151",
+                                               complemento = "5o andar")
+               )
+)
+```
+
+### lista de funções
+
+```{r}
+
+list(oi = function(x){print("oi")}, tchau = function(x){print("tchau")})
+
+```
+
+## Atributos
+
+- carregam informações "adicionais" sobre os objetos
+
+- podem ser modificados ou criados com a função `attr`
+
+```{r}
+
+v <- 1:5
+attr(v, "por_que_criei_esse_objeto") = "mostrar como criar atributos no curso"
+v
+
+```
+
+- podem ser listados com a função `attributes`
+
+```{r}
+attributes(v)
+```
+
+- fazem imprimir nominhos na função "print"
+
+```{r}
+v <- c(1,2,3,4,5)
+print(v)
+
+attr(v, "names") = c("um", "dois", "tres", "quatro", "cinco")
+print(v)
+
+v2 <- c(um = 1, dois = 2, tres = 3, quatro = 4, cinco = 5)
+v2
+names(v)
+```
+
+- descrevem o jeito com que o objeto é lido pelo R
+
+```{r}
+
+matriz <- matrix(1:4, nrow = 2)
+matriz
+attributes(matriz)
+
+v <- 1:4
+v
+attr(v, "dim") = c(2,2)
+v
+
+```
+
+## data.frames
+
+- tipo de dado mais importante do R
+- representam dados retangulares
+- são estruturas um pouco antigas
+- tibble é a atualização do data.frame
+- imprime mais bonito
+
+```{r}
+
+# print normal
+iris
+
+# print tibble
+as_tibble(iris)
+
+```
+
+- como criar
+
+```{r}
+
+df_exemplo <- tibble(nomes = c("fernando", "julio", "athos"),
+                 qualidades = c("lindo", "bonitinho", "bonitão"))
+
+df_exemplo
+
+```
+
+- ficam bonitos na função `View`
+
+```{r}
+#View(df_exemplo)
+```
+
+- são listas com vetores de mesma dimensão com a adição de três atributos
+
+```{r}
+
+attributes(df_exemplo)
+
+lista <- list(nomes = c("fernando", "julio", "athos"),
+              qualidades = c("lindo", "bonitinho", "bonitão"),
+              id = c(1,2,3))
+
+lista
+
+attr(lista, "row.names") = 1:3
+attr(lista, "class") = "data.frame"
+
+lista
+
+```
+
+- por que o código abaixo vai resultar num erro?
+
+```{r}
+
+#df_zoado <- tibble(nome = c("João", "Marcos", "Pedro"), idade = c(10, 15, 12, 17))
+
+```
+
+EXERCÍCIO
+
+Crie o data.frame que é impresso da seguinte forma:
+
+  id_aluno     opiniao veio_pra_aula
+1        1        amei          TRUE
+2        2      dahora          TRUE
+3        3 muito legal          TRUE
+4        4        show          TRUE
+5        5        <NA>         FALSE
+
+SUGESTÃO: COMECE DO DF ZOADO
+
+```{r}
+
+exercicio1 <- tibble(id_aluno = 1:5, opiniao = c("amei", "dahora", "muito legal", "show", NA), veio_pra_aula = c(TRUE, TRUE, TRUE, TRUE, FALSE))
+
+```
+  
+## subsetting
+
+- listas começam a guardar muita informação
+- é útil saber como extrair, e modificar, pedaços de listas
+- existem três operadores de subsetting em R
+- [], [[]] e $
+
+# vetores
+
+- subsetting de vetores é o mais simples
+- dá para usar apenas []
+- existem seis formar distintas de usar o []:
+
+- com vetores de inteiros positivos
+```{r}
+
+v <- c("vetor", "de", "textos")
+v[2]
+
+v[c(1,2)]
+
+```
+
+- com vetores de inteiros negativos
+```{r}
+
+v <- c("vetor", "de", "textos")
+v[-2]
+
+v[-c(1,2)]
+
+```
+
+- com vetores de booleanos
+```{r}
+
+v <- c("vetor", "de", "textos", "legal")
+v[c(TRUE, FALSE, TRUE, FALSE)]
+
+```
+
+```{r}
+
+numerinhos <- 1:10
+
+numerinhos[numerinhos < 5]
+
+```
+
+- vetores de strings
+```{r}
+v <- c(um = 1, dois = 2, tres = 3, quatro = 4, cinco = 5)
+names(v)
+
+v[c("um","cinco")]
+```
+
+- erros ou coisas estranhas
+```{r}
+v <- c(um = 1, dois = 2, tres = 3, quatro = 4, cinco = 5)
+names(v)
+
+v[c("un","cinco")]
+```
+
+```{r}
+v <- c(um = 1, dois = 2, tres = 3, quatro = 4, cinco = 5)
+names(v)
+
+v[6]
+v[c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE)]
+```
+
+EXERCICIO
+
+```{r}
+
+v1 <- c(a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7)
+
+```
+
+a) Selecione os elementos de índice ímpar de v1 usando um vetor de inteiros 
+
+b) Selecione os elementos de índice par de v1 usando um vetor de booleanos
+
+c) Selecione os três últimos índices de v1 usando um vetor de inteiros 
+
+d) Ordene as entradas de v1 de trás para frente usando um vetor de strings. 
+O vetor resultante deve ser
+
+```{r}
+
+c(g = 7, f = 6, e = 5, d = 4, c = 3, b = 2, a = 1)
+
+```
+
+A solução deve ser da forma
+
+```{r}
+#v[????]
+```
+
+
+SOLUÇÃO
+
+
+```{r}
+#a)
+
+v1[c(1,3,5,7)]
+v1[seq(1,7,2)]
+
+#b) 
+
+v1[c(FALSE, TRUE)]
+v1[rep(c(TRUE, FALSE), 3)]
+
+#c)
+
+v1[-c(1,2,3,4)]
+v1[-(1:4)]
+v1[-seq(1,4)]
+
+#d
+
+v1[c("g", "f", "e", "d", "c", "b", "a")]
+```
+
+- como vimos, matrizes são vetores numéricos com a adição do atributo "dim"
+```{r}
+matriz <- matrix(1:10, 5, 2)
+
+str(matriz)
+
+attributes(matriz)
+```
+
+- aceitam subsets de duas maneiras
+- apenas [
+```{r}
+matriz[7]
+```
+
+- [ com vírgula
+```{r}
+matriz[2,2]
+```
+
+# listas
+
+- com listas passa a ser útil usar o operador [[
+```{r}
+
+lista <- list(a = 1, b = 2, c = 3)
+
+lista[[1]]
+lista[1]
+
+```
+
+- com [[ não dá pra fazer as seleções que se faz com [ (vetor de booleanos, vetor de inteiros, etc)
+
+```{r}
+
+lista <- list(a = 1, b = 2, c = 3)
+
+#ERRO
+#lista[[-1]]
+
+```
+
+- com [ dá, mas o resultado é uma lista, e não um vetor
+
+```{r}
+
+lista <- list(a = 1, b = 2, c = 3)
+
+lista[-1]
+lista["a"]
+lista[c("a", "b")]
+lista[c(TRUE, FALSE, TRUE)]
+
+```
+
+- também pode usar o operador $, que busca nos nomes da lista
+
+```{r}
+
+names(lista)
+
+#mostra que ele lista os nomes se você apertar tab
+lista$
+
+lista$a
+
+lista['a']
+
+```
+
+#data.frames
+
+- são listas, mas se parecem com matrizes com colunas heterogeneas
+- como é uma lista, pode fazer subset com [[, $ e [
+- se você usar [ e apenas um vetor, o resultado é um data_frame (trata o data_frame como se fosse uma lista)
+
+```{r}
+
+df_exemplo <- tibble(id = 1:3, nomes = c("a", "b", "c"), idade = c(10, 15, 20))
+
+#seleciona colunas
+df_exemplo[1]
+
+#seleciona linhas
+df_exemplo[1,]
+
+```
+
+- se você usar [[, o resultado é a coluna selecionada no formato de vetor (trata o data_frame como se fosse uma lista)
+
+```{r}
+
+#seleciona colunas no formato de vetor
+df_exemplo[[1]]
+
+```
+
+- se você usar [ e dois vetores, é como fazer subset de uma matriz
+
+```{r}
+df_exemplo <- tibble(id = 1:3, nomes = c("a", "b", "c"), idade = c(10, 15, 20))
+
+
+df_exemplo[2, c("nomes")]
+```
+
+# Atribuição
+
+- é possível usar subsets pra alterar valores
+
+```{r}
+
+df_exemplo[df_exemplo$id == 2, "nomes"] = "João" 
+
+lista <- list(a = 1,b = 2, c = 3)
+lista$b = "bê"
+
+```
+
+- pode ser estranho quando você tentar modificar vetores
+
+```{r}
+
+v <- c(1,2,4,5)
+
+v[3] = "a"
+
+
+```
+
+# Importação de dados
+
+```{r}
+
+library(readxl)
+
+# Abre planilhas em csv que usem como separado decimal o caractér "."
+legendas_pt_1 <- read.csv(file = "inputs/legendas_pt_1.csv", stringsAsFactors = F)
+
+# Abre planilhas em csv que usem como separado decimal o caractér ","
+legendas_pt_2 <- read.csv2(file = "inputs/legendas_pt_2.csv", stringsAsFactors = F)
+
+# Abre planilhas em xlsx
+comentarios_pt_1 <- read_excel(path = "inputs/comentarios_pt_1.xlsx")
+comentarios_pt_2 <- read_excel(path = "inputs/comentarios_pt_2.xlsx")
+
+#empilha as linhas de um data.frame que tem as mesmas colunas na mesma ordem
+legendas <- rbind(legendas_pt_1, legendas_pt_2)
+
+comentarios <- rbind(comentarios_pt_1, comentarios_pt_2)
+```
+
+
+## Stringr: Trabalhando com textos
+
+```{r}
+library(stringr)
+```
+
+
+### Funções básicas
+
+- comprimento de texto
+
+```{r}
+
+str_length(c("a", "bb", "ccc"))
+
+str_length(comentarios$autor[1:10])
+
+str_length(comentarios$texto[1:10])
+
+```
+
+- é diferente de length
+
+```{r}
+
+length("oi, blz?")
+
+str_length("oi, blz?")
+
+```
+
+- str_trim tira espaços extras entre as palavras
+
+```{r}
+
+#exemplo de texto com um espaço a mais entre o ponto e "cs"
+s <- comentarios$texto[79]
+
+str_trim(s)
+
+#podem existir exemplos mais dramáticos
+
+str_trim("\n\f   que absurdo essa string       \n\t")
+  
+#\f é o delimitador de final de página em arquivos de texto
+#\n é o delimitador de linha
+#\t é o delimitador de tab
+```
+
+- str_sub extrai uma subsequência de caractéres a partir de delimitadores de começo e fim
+
+```{r}
+
+comentarios$texto[1:3]
+
+str_sub(comentarios$texto[1:3], start = 2, end = 5)
+
+```
+
+- omissões de start são interpretadas como 1 e omissões de end são interpretadas como str_length do vetor.
+
+```{r}
+
+s <- comentarios$texto[1:4]
+
+#mesmo resultado
+str_sub(comentarios$texto[1:4], end = 5)
+str_sub(s, start = 1, end = 5)
+
+#mesmo resultado
+str_sub(s, start = 2)
+str_sub(comentarios$texto[1:4], start = 2, end = str_length(comentarios$texto[1:4]))
+
+# também aceita vetores nos params start e end vetores.
+# se length(start), length(end) forem menores do length(s)
+# o r dá seu jeito
+
+str_sub(s, start = c(1,2))
+str_sub(s, start = c(1,2,3,4), end = c(2,5))
+
+# se end < start a função retorna ""
+
+str_sub(s, start = 2, end = 1)
+
+# faz extrações negativas
+
+str_sub(s, start = -2)
+```
+
+- caixa alta e caixa baixa
+
+```{r}
+
+str_to_upper(s)
+
+str_to_lower(s)
+
+```
+
+### Regex simples
+
+- trabalhar com textos exige um conhecimento de expressões regulares (*reg*ular *ex*pressions)
+- regex e uma sequencia de caracteres concisa que representa outras
+- se não houverem caractéres especiais (mencionados abaixo), uma determinada expressão representa todas as strings que contém a regex
+
+- str_view mostra os elementos de um vetor que são representados por uma determinada regex
+```{r}
+#highlights da letra "a" nos comentários do vídeo do Porta.
+stringr::str_view(c("banana", "bolota", "beloto"), "a")
+```
+
+- admite o parâmetro match = `TRUE`
+```{r}
+#comentários que contém  a palavra "amor" no vídeo do Porta.
+stringr::str_view(comentarios$texto, "careca", match = TRUE)
+```
+
+- os caractéres especiais de regex do R estão listadas abaixo, e o seu significado será detalhado no que segue
+
+. \ | ( ) [ { ^ $ * + ?
+
+### Operador "OU"
+
+- o caractér "|" indica que a regex deve procurar a ocorrêcia de algum dentre dois padrões
+
+```{r}
+str_view(comentarios$texto, "careca|clarice", match = TRUE)
+```
+
+### Delimitadores
+
+- os caractéres "^" e "$" representam o começo da string e o final da string, respectivamente
+
+```{r}
+str_view(comentarios$texto, "^a", match = T)
+```
+
+```{r}
+str_view(comentarios$texto, "!$", match = T)
+```
+
+### Quantificadores
+
+- os caractéres `?`, `+`, `*` e `{x,y}` indicam quantas vezes um padrão se repete
+
+- o caractér `+` indica que o ítem precedente deve se repetir uma vez ou mais
+- a regex `k+` significa "ocorrência da letra **k** uma vez ou mais"
+
+```{r}
+#pegamos risadas do tipo kkkk
+str_view(comentarios$texto, "k+", match = TRUE)
+```
+
+- a regex `Kk+` significa "ocorrência da sequência K seguido de **k** uma vez ou mais"
+```{r}
+#Pegamos quem riu com K maiúsculo na primeira letra
+str_view(comentarios$texto, "Kk+", match = TRUE)
+```
+
+- a sequência "{x,y}" indica que o item precedente deve se repetir entre x e y vezes
+- omissões significam que x = y
+- a regex `k{3}` significa "ocorrêcia da sequência **kkk** (k três vezes)
+
+```{r}
+#Pegamos quem riu com mais de 13 k's apenas
+str_view(comentarios$texto, "k{14}", match = TRUE)
+```
+
+- o caractér "*" indica que o item precedente deve se repetir zero vezes ou mais
+- a regex `Kk*` significa "ocorrência de um 'K' seguido de um 'k' zero vezes ou mais"
+```{r}
+#Começamos a pegar os caras que só riem com maiúsculas
+str_view(comentarios$texto, "Kk*", match = TRUE)
+```
+
+- o caractér "?" indica que o item precedente é opcional e deve se repetir no máximo uma vez
+
+- para aplicar quantificadores em mais do que um caracter usa-se "("
+- a regex `a(es)+` significa "ocorrência de um 'a' seguida de "es" uma vez ou mais"
+
+EXERCICIO
+
+Produza um str_view com sequências de "K"'s com PELO MENOS DOIS "K"'s 
+
+
+
+SOLUÇÃO
+
+
+
+```{r}
+str_view(comentarios$texto, "KK+", match = TRUE)
+```
+
+### Conjuntos
+
+- caractéres dentro de [] represetentam a ocorrência de "qualquer um dentre estes"
+
+```{r}
+# Risadas que começam com K maiúsculo ou minúsculo
+str_view(comentarios$texo, "[Kk]k+", match = TRUE)
+```
+
+- existem alguns conjuntos úteis pré definidos
+- o caracter '.' FORA dos colchetes representa "qualquer caracter"
+- o caracter '.' DENTRO dos colchetes é só um ponto
+- '[0-9]' repesenta qualquer número entre 0 e 9
+- '[a-z]','[A-Z]','[a-zA-z]' representem, respectivamente, o alfabeto minúculo, o alfabeto maiúsculo e ambos
+- o símbolo '^' dentro de um colchete indica a negação da classe definida. [^0-9] indica "não é número"
+
+EXERCÍCIO
+
+Escreva uma regex que represente todos os comentários com risadas que riem com um número par de "k"'s (ignorando a caixa alta e baixa).
+
+
+
+```{r}
+str_view(comentarios$texto, "([^Kk]|^)([Kk]k)+([^k]|$)", match = NA)
+```
+
+## Funções que usam regex
+
+- str_detect(s, regex) recebe um vetor e uma regex. retorna um vetor de `TRUE` e `FALSE` representando o pareamento da regex com as entradas de s
+
+```{r}
+
+str_detect(comentarios$texto[1:10], "careca")
+str_detect(legendas$textos[1:10], "\\?")
+str_detect(legendas$textos[1:10], "[?]")
+
+```
+
+- str_replace e str_replace_all recebem um vetor, uma regex e uma sequência de caractéres e substituem os pareamentos da regex pela sequência de caractéres
+
+```{r}
+
+str_replace(comentarios$texto[1], "k", "ha")
+str_replace_all(comentarios$texto[1], "k", "ha")
+str_replace_all(comentarios$texto[1], "Kk+", "haha")
+
+#substituir repetições de espaço
+comentarios$texto[65]
+str_replace_all(comentarios$texto[65], " +", " ")
+```
+
+- str_extract e str_extract_all recebem um vetor e uma regex e extraem exatamente o conteúdo do match da regex
+
+```{r}
+
+#extrai os "sobrenomes" dos autores dos comentários
+str_extract(comentarios$autor, "[A-Za-z]+$")
+
+```
+
+- str_match e str_match_all recebem um vetor e uma regex e extraem mais ou menos como o str_extract,  mas permitem que você quebre em subconjuntos
+
+```{r}
+str_match(comentarios$texto[1:20], "([Cc]a)(re)(ca)")
+```
+
+- str_split recebe um vetor de texto e uma string e "quebra" o texto em subconjuntos menores
+
+```{r}
+str_split(comentarios$texto[1:10], pattern = " ")
+```
+
+- str_subset() guarda apenas as strings compativeis com uma determinada regex
+
+```{r}
+
+str_subset(comentarios$texto, "careca")
+
+```

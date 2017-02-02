@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Curso R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Athos Damiani Daniel Falbel Fernando Correa Julio Trecenti William Amorim" />
+    <meta name="date" content="2017-12-01" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <link href="libs/plotlyjs/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="libs/plotlyjs/plotly-latest.min.js"></script>
+    <script src="libs/plotly-binding/plotly.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Curso R
+## Verão IME-USP 2017
+### Athos Damiani<br/>Daniel Falbel<br/>Fernando Correa<br/>Julio Trecenti<br/>William Amorim
+### 30/01/2017
+
+---
+
+
+
+
+class: inverse, middle, center
+
+# Ciência de dados
+
+---
+background-image: url(https://cdn.datafloq.com/cms/os_big_data_open_source_tools-v2.png)
+background-position: 50% 50%
+background-size: 80%
+
+# Papel do R
+
+---
+background-image: url(https://www.rstudio.com/wp-content/uploads/2014/06/RStudio-Ball.png)
+background-position: 50% 50%
+background-size: 50%
+
+# Papel do R
+
+- R é a grande cola.
+
+---
+background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/data-science.png)
+background-position: 50% 50%
+background-size: 80%
+
+# Fazendo ciência de dados
+
+---
+background-image: url(http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a511dd3ba4970c-pi)
+background-position: 80% 50%
+background-size: 80%
+
+# R e seus pacotes
+
+---
+background-image: url(https://pbs.twimg.com/media/CvzEQcfWIAAIs-N.jpg)
+background-position: 90% 50%
+background-size: 60%
+
+# Tidyverse
+
+O universo arrumadinho
+
+---
+class: inverse, center, middle
+
+# Princípios
+
+---
+
+# O tidyverse
+
+Revolução do R. Quem mexia em R antes de 2012 nota uma diferença gigante.
+
+--
+
+Os princípios do `tidyverse` seguem abaixo.
+
+1. **Eficiência algorítmica vs eficiência de trabalho**. O tempo gasto pensando em como realizar uma operação é mais importante do que o tempo que o computador gasta para realizar um cálculo.
+
+--
+
+1. **Tidy data**. Princípio para arrumação de base de dados que resolve 90% dos problemas reais. Base *tidy*:
+    - Cada observação é uma linha do bd.
+    - Cada variável é uma coluna do bd.
+    - Cada dado está numa célula do bd.
+
+--
+
+1. **Utilização do operador `%&gt;%` (pipe)**.
+
+    &gt; "No matter how complex and polished the individual operations are, it is often the quality of the glue that most directly determines the power of the system."  
+    &gt; -- Hal Abelson
+    &gt; 
+
+---
+
+# O tidyverse
+
+1. **Aparato mnemônico**. Pacotes baseados em teoria e API consistentes.
+
+--
+
+1. **Minimalidade e funções puras**. Funções sem *side-effects*. Interagem com o mundo através de inputs e outputs. Encaixa perfeitamente com o princípio do pipe.
+
+--
+
+1. *workflow* para ciência de dados
+
+---
+
+# RMarkdown
+
+- Tipo de documento especial que contém tanto textos (em markdown) quanto códigos em R (em chunks). 
+    - Markdown: documento de texto com padrões básicos de formatação, como **negrito**, *itálico*, títulos, subtítulos, itemização e referências cruzadas.
+    - Chunks: pedaços de códigos em R.
+
+--
+
+**Vantagens**:
+
+1. **Simplicidade e foco**. 
+1. **Versátil**.
+1. **Reprodutível**. 
+1. **Eficiente**.  
+
+Para detalhes sobre como utilizar o RMarkdown, [leia aqui](http://r4ds.had.co.nz/r-markdown.html) [e aqui](http://rmarkdown.rstudio.com/lesson-1.html).
+
+---
+
+# GitHub
+
+- Maior plataforma online para compartilhar códigos. 
+- Utiliza o `git`, a melhor ferramenta de versionamento de software.
+
+--
+
+**Vantagens**:
+
+1. Boa prática de organizar projetos pois mantém os códigos organizados e atualizados na web
+1. Projetos colaborativos: aumenta a produtividade e permite que pessoas de todo lugar ajudem nos projetos. 
+1. O `tidyverse` só é o que é hoje por conta do *social coding*.
+
+Para detalhes, faça o [data science toolbox](https://www.coursera.org/learn/data-scientists-tools).
+
+---
+
+# Nosso curso
+
+- Nosso curso utiliza o `tidyverse`.
+
+--
+
+- O melhor lugar para aprender sobre o `tidyverse` é no livro [R for data science](http://r4ds.had.co.nz).
+
+--
+
+- Aqui abordamos partes do livro e adicionamos outros, como práticas de modelgem preditiva e estudos de caso.
+
+--
+
+- Material do curso: [Curso-R Verão 2017](https://curso-r.github.io/verao2017) (em construção).
+
+---
+
+# Público-alvo
+
+- Estudantes de graduação em estatística que desejam ganhar tempo nos trabalhos da faculdade e entrar no mercado de trabalho com bons diferenciais.
+
+--
+
+- Profissionais do mercado de trabalho que desejam inserir o R mo fluxo de atividades do setor/empresa.
+
+--
+
+- Acadêmicos com interesse em tornar suas análises e códigos mais legíveis, reprodutíveis, eficientes e organizados.
+
+
+---
+background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-1-1.png)
+background-position: 80% 50%
+background-size: 100%
+
+# Questionário
+
+---
+background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-2-1.png)
+background-position: 80% 50%
+background-size: 70%
+
+# Questionário
+
+---
+background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-3-1.png)
+background-position: 80% 50%
+background-size: 100%
+
+# Questionário
+
+---
+
+# Workflow das aulas
+
+- Aulas no laboratório de computação (CEC).
+- Exercícios e laboratórios durante as aulas.
+    - entrega por e-mail com prazos a combinar.
+- Leituras complementares e opcionais fora da sala de aula.
+
+---
+
+# Requisitos básicos
+
+- Lógica de programação.
+- Veja [essa apresentação (aprox. 10 min)](http://curso-r.github.io/slides/aula_00_01_apresentacao.html) (slides: 13 ao 43).
+- Leia esse [post de blog (aprox. 5 min)](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/).
+- Se quiser ganhar tempo, [crie uma conta no Github](http://github.com).
+
+---
+
+### **Aula 01** - 30/01: Introdução ao R, Rstudio e `tidyverse`
+
+
+```r
+matrix(1:10, ncol = 2)
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    6
+## [2,]    2    7
+## [3,]    3    8
+## [4,]    4    9
+## [5,]    5   10
+```
+
+
+---
+
+### **Aula 02** - 01/02: Manipulação de vetores com `lubridate`, `stringr` e `forcats`
+
+
+```r
+library(lubridate)
+dmy('10/12/2015')
+```
+
+```
+## [1] "2015-12-10"
+```
+
+--
+
+
+```r
+library(stringr)
+str_match('um texto muito loUco', '^um.+(texto).+(lo[uU]co).*$')
+```
+
+```
+##      [,1]                   [,2]    [,3]   
+## [1,] "um texto muito loUco" "texto" "loUco"
+```
+
+--
+
+
+```r
+library(forcats)
+fct_lump(c(letters[1:10], letters), n = 1)
+```
+
+```
+##  [1] a     b     c     d     e     f     g     h     i     j     a    
+## [12] b     c     d     e     f     g     h     i     j     Other Other
+## [23] Other Other Other Other Other Other Other Other Other Other Other
+## [34] Other Other Other
+## Levels: a b c d e f g h i j Other
+```
+
+---
+
+### **Aula 03** - 03/02: Manipulação de dados com `dplyr` e `tidyr`
+
+
+```r
+library(dplyr)
+library(abjData)
+pnud_min %&gt;% 
+  select(ano, regiao, idhm) %&gt;% 
+  filter(ano == 2010) %&gt;% 
+  group_by(regiao) %&gt;% 
+  summarise(media = mean(idhm)) %&gt;% 
+  arrange(desc(media)) %&gt;% 
+  mutate(media = scales::percent(media))
+```
+
+```
+## # A tibble: 5 × 2
+##         regiao media
+##          &lt;chr&gt; &lt;chr&gt;
+## 1          Sul 71.4%
+## 2      Sudeste 69.9%
+## 3 Centro-Oeste 69.0%
+## 4        Norte 60.8%
+## 5     Nordeste 59.1%
+```
+
+---
+
+### **Aula 04** - 06/02: Visualização com `ggplot2`
+
+
+```r
+library(ggplot2)
+ggplot(mtcars, aes(mpg, disp, colour = factor(am))) + 
+  geom_point() +
+  theme_bw()
+```
+
+![](aula0_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+---
+
+### **Aula 05** - 08/02: Programação funcional com `purrr` e `plyr`
+
+
+```r
+library(purrr)
+a &lt;- list(c(1, 2), c(3, 4))
+b &lt;- list(c(5, 6), c(7, 8))
+map2(a, b, ~.x + .y)
+```
+
+```
+## [[1]]
+## [1] 6 8
+## 
+## [[2]]
+## [1] 10 12
+```
+
+---
+
+### **Aulas 06 e 07** - 10/02: Modelagem usando o R
+
+
+```r
+library(captchaTJRS)
+a &lt;- captchaTJRS::download('captcha.jpg')
+'captcha.jpg' %&gt;% 
+  captchaTJRS::ler() %&gt;% 
+  captchaTJRS::desenhar()
+```
+
+![](aula0_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+
+```r
+captchaTJRS::predizer('captcha.jpg')
+```
+
+```
+## [1] "9360"
+```
+
+---
+
+### **Aula 08** - 15/02: Temas escolhidos pelos alunos
+
+- Mapas
+- Web scraping
+- Modelos bayesianos
+- Análise de Sobrevivência
+- Big data
+- Text mining
+- Deep learning
+- Pacotes
+- Rcpp
+
+---
+
+### **Aula 09** - 17/02: Shiny e tópicos sobre comunicação com o R.
+
+
+```r
+library(ggplot2)
+p &lt;- ggplot(mtcars, aes(mpg, disp, colour = factor(am))) + geom_point()
+plotly::ggplotly(p)
+```
+
+<div id="htmlwidget-e8be97c54b3a93c4676a" style="width:648px;height:288px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e8be97c54b3a93c4676a">{"x":{"data":[{"x":[21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,21.5,15.5,15.2,13.3,19.2],"y":[258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,120.1,318,304,350,400],"text":["mpg: 21.4<br>disp: 258<br>factor(am): 0","mpg: 18.7<br>disp: 360<br>factor(am): 0","mpg: 18.1<br>disp: 225<br>factor(am): 0","mpg: 14.3<br>disp: 360<br>factor(am): 0","mpg: 24.4<br>disp: 146.7<br>factor(am): 0","mpg: 22.8<br>disp: 140.8<br>factor(am): 0","mpg: 19.2<br>disp: 167.6<br>factor(am): 0","mpg: 17.8<br>disp: 167.6<br>factor(am): 0","mpg: 16.4<br>disp: 275.8<br>factor(am): 0","mpg: 17.3<br>disp: 275.8<br>factor(am): 0","mpg: 15.2<br>disp: 275.8<br>factor(am): 0","mpg: 10.4<br>disp: 472<br>factor(am): 0","mpg: 10.4<br>disp: 460<br>factor(am): 0","mpg: 14.7<br>disp: 440<br>factor(am): 0","mpg: 21.5<br>disp: 120.1<br>factor(am): 0","mpg: 15.5<br>disp: 318<br>factor(am): 0","mpg: 15.2<br>disp: 304<br>factor(am): 0","mpg: 13.3<br>disp: 350<br>factor(am): 0","mpg: 19.2<br>disp: 400<br>factor(am): 0"],"key":null,"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"0","legendgroup":"0","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text"},{"x":[21,21,22.8,32.4,30.4,33.9,27.3,26,30.4,15.8,19.7,15,21.4],"y":[160,160,108,78.7,75.7,71.1,79,120.3,95.1,351,145,301,121],"text":["mpg: 21<br>disp: 160<br>factor(am): 1","mpg: 21<br>disp: 160<br>factor(am): 1","mpg: 22.8<br>disp: 108<br>factor(am): 1","mpg: 32.4<br>disp: 78.7<br>factor(am): 1","mpg: 30.4<br>disp: 75.7<br>factor(am): 1","mpg: 33.9<br>disp: 71.1<br>factor(am): 1","mpg: 27.3<br>disp: 79<br>factor(am): 1","mpg: 26<br>disp: 120.3<br>factor(am): 1","mpg: 30.4<br>disp: 95.1<br>factor(am): 1","mpg: 15.8<br>disp: 351<br>factor(am): 1","mpg: 19.7<br>disp: 145<br>factor(am): 1","mpg: 15<br>disp: 301<br>factor(am): 1","mpg: 21.4<br>disp: 121<br>factor(am): 1"],"key":null,"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text"}],"layout":{"margin":{"t":32.4812761543689,"r":7.30593607305936,"b":46.4356140539123,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[9.225,35.075],"ticktext":["10","15","20","25","30","35"],"tickvals":[10,15,20,25,30,35],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"mpg","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[51.055,492.045],"ticktext":["100","200","300","400"],"tickvals":[100,200,300,400],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"disp","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.918587200098682},"annotations":[{"text":"factor(am)","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"modeBarButtonsToRemove":["sendDataToCloud"]},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+
+---
+
+# Não vamos falar de
+
+- Programação eficiente com R. Para isso, veja [esse livro](https://bookdown.org/csgillespie/efficientR/), que aborda temas importantíssimos como *profiling*, paralelização, `Rcpp`.
+
+--
+
+- Não vamos nos aprofundar em "big data". Para isso estude sobre [sparklyr](http://spark.rstudio.com/), [tensorflow](https://rstudio.github.io/tensorflow/) e [mongodb](https://gist.github.com/Btibert3/7751989).
+
+---
+
+# Diferenças entre C/C++ e R
+
+- `C`: eficiência e transparência, 
+- `R`: é análise de dados e interatividade. 
+
+Isso faz com que as duas linguagens sejam bem diferentes!
+
+--
+
+Na prática, temos que
+
+- C é compilável, R é uma linguagem script.
+- R é uma linguagem funcional. Por exemplo, `(`, `&amp;` e `+` são funções do R.
+- R é vetorizado. Observe esse sacrilégio
+
+
+```r
+a &lt;- c(1, 2, 3)
+b &lt;- c(1, 2, 3, 4, 5, 6)
+a + b 
+```
+
+```
+## [1] 2 4 6 5 7 9
+```
+
+--
+
+- Você raramente usará loops (`for`, `while`) no R.
+
+---
+background-image: url(https://www.rstudio.com/wp-content/uploads/2014/06/RStudio-Ball.png)
+background-position: 50% 50%
+background-size: 50%
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('showSlide', function (slide) {setTimeout(function() {window.dispatchEvent(new Event('resize'));}, 100)});</script>
+
+  </body>
+</html>

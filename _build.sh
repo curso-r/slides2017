@@ -1,0 +1,1 @@
+Rscript -e build.R

@@ -1,368 +1,580 @@
 ---
-title: "Curso R"
-subtitle: "Verão IME-USP 2017"
-author: "Athos Damiani<br/>Daniel Falbel<br/>Fernando Correa<br/>Julio Trecenti<br/>William Amorim"
-date: "30/01/2017"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+title: "aula1"
+author: "athos"
+date: "2 de fevereiro de 2017"
+output: html_document
+---
+---
+title: "Aula Zero"
+output: html_notebook
 ---
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+# Roteiro
+
+- RStudio
+- R como calculadora
+- Pedindo ajuda
+- Instalar pacotes
+- Controles de Fluxo
+- Objetos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RStudio
+
+ - Quadrantes
+ - .Rproj
+ - Sugestões de disposição de pastas (3 estruturas)
+ - Novo arquivo (script normal, rmd e notebook)
+ - RMarkdown
+ 
+### Sugestões de disposição de pastas 
+
+**Estrutura 1**: Por extensão de arquivo.
+
+```{r, engine='bash', eval=FALSE}
+nome_do_projeto/
+  - .Rprofile   # códigos para rodar assim que abrir o projeto
+  - R/          # Código R, organizado com a-carrega.R, b-prepara bd.R, c-vis.R, d-modela, ...
+  - RData/      # Dados em formato .RData
+  - csv/        # Dados em .csv
+  - png/        # gráficos em PNG
+  - nome_do_projeto.Rproj
 ```
 
-class: inverse, middle, center
+**Estrutura 2**: Típico projeto de análise estatística.
 
-# Ciência de dados
+```{r, engine='bash', eval = FALSE}
+project/
+  - README.Rmd   # Descrição do pacote
+  - set-up.R     # Pacotes etc
+  - R/           # Código R, organizado com 0-load.R, 1-tidy.R, 2-vis.R, ...
+  - data/        # Dados (estruturados ou não)
+  - figures/     # gráficos (pode ficar dentro de output/)
+  - output/      # Relatórios em .Rmd, .tex etc
+  - project.Rproj
+```
 
----
-background-image: url(https://cdn.datafloq.com/cms/os_big_data_open_source_tools-v2.png)
-background-position: 50% 50%
-background-size: 80%
+**Estrutura 3**: Pacote do R (avançado). 
 
-# Papel do R
+```{r, engine='bash', eval = FALSE}
+project/
+  - README.md    # Descrição do pacote
+  - DESCRIPTION  # Metadados estruturados do pacote e dependências
+  - NAMESPACE    # importações e exportações do pacote
+  - vignettes/   # Relatórios em .Rmd
+  - R/           # Funções do R
+  - data/        # Dados estruturados (tidy data)
+  - data-raw/    # Dados não estruturados e arqs 0-load.R, 1-tidy.R, 2-vis.R, ...
+  - project.Rproj
+```
 
----
-background-image: url(https://www.rstudio.com/wp-content/uploads/2014/06/RStudio-Ball.png)
-background-position: 50% 50%
-background-size: 50%
 
-# Papel do R
 
-- R é a grande cola.
 
----
-background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/data-science.png)
-background-position: 50% 50%
-background-size: 80%
 
-# Fazendo ciência de dados
 
----
-background-image: url(http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a511dd3ba4970c-pi)
-background-position: 80% 50%
-background-size: 80%
 
-# R e seus pacotes
 
----
-background-image: url(https://pbs.twimg.com/media/CvzEQcfWIAAIs-N.jpg)
-background-position: 90% 50%
-background-size: 60%
 
-# Tidyverse
 
-O universo arrumadinho
 
----
-class: inverse, center, middle
 
-# Princípios
 
----
 
-# O tidyverse
+## R como calculadora
 
-Revolução do R. Quem mexia em R antes de 2012 nota uma diferença gigante.
-
---
-
-Os princípios do `tidyverse` seguem abaixo.
-
-1. **Eficiência algorítmica vs eficiência de trabalho**. O tempo gasto pensando em como realizar uma operação é mais importante do que o tempo que o computador gasta para realizar um cálculo.
-
---
-
-1. **Tidy data**. Princípio para arrumação de base de dados que resolve 90% dos problemas reais. Base *tidy*:
-    - Cada observação é uma linha do bd.
-    - Cada variável é uma coluna do bd.
-    - Cada dado está numa célula do bd.
-
---
-
-1. **Utilização do operador `%>%` (pipe)**.
-
-    > "No matter how complex and polished the individual operations are, it is often the quality of the glue that most directly determines the power of the system."  
-    > -- Hal Abelson
-    > 
-
----
-
-# O tidyverse
-
-1. **Aparato mnemônico**. Pacotes baseados em teoria e API consistentes.
-
---
-
-1. **Minimalidade e funções puras**. Funções sem *side-effects*. Interagem com o mundo através de inputs e outputs. Encaixa perfeitamente com o princípio do pipe.
-
---
-
-1. *workflow* para ciência de dados
-
----
-
-# RMarkdown
-
-- Tipo de documento especial que contém tanto textos (em markdown) quanto códigos em R (em chunks). 
-    - Markdown: documento de texto com padrões básicos de formatação, como **negrito**, *itálico*, títulos, subtítulos, itemização e referências cruzadas.
-    - Chunks: pedaços de códigos em R.
-
---
-
-**Vantagens**:
-
-1. **Simplicidade e foco**. 
-1. **Versátil**.
-1. **Reprodutível**. 
-1. **Eficiente**.  
-
-Para detalhes sobre como utilizar o RMarkdown, [leia aqui](http://r4ds.had.co.nz/r-markdown.html) [e aqui](http://rmarkdown.rstudio.com/lesson-1.html).
-
----
-
-# GitHub
-
-- Maior plataforma online para compartilhar códigos. 
-- Utiliza o `git`, a melhor ferramenta de versionamento de software.
-
---
-
-**Vantagens**:
-
-1. Boa prática de organizar projetos pois mantém os códigos organizados e atualizados na web
-1. Projetos colaborativos: aumenta a produtividade e permite que pessoas de todo lugar ajudem nos projetos. 
-1. O `tidyverse` só é o que é hoje por conta do *social coding*.
-
-Para detalhes, faça o [data science toolbox](https://www.coursera.org/learn/data-scientists-tools).
-
----
-
-# Nosso curso
-
-- Nosso curso utiliza o `tidyverse`.
-
---
-
-- O melhor lugar para aprender sobre o `tidyverse` é no livro [R for data science](http://r4ds.had.co.nz).
-
---
-
-- Aqui abordamos partes do livro e adicionamos outros, como práticas de modelgem preditiva e estudos de caso.
-
---
-
-- Material do curso: [Curso-R Verão 2017](https://curso-r.github.io/verao2017) (em construção).
-
----
-
-# Público-alvo
-
-- Estudantes de graduação em estatística que desejam ganhar tempo nos trabalhos da faculdade e entrar no mercado de trabalho com bons diferenciais.
-
---
-
-- Profissionais do mercado de trabalho que desejam inserir o R mo fluxo de atividades do setor/empresa.
-
---
-
-- Acadêmicos com interesse em tornar suas análises e códigos mais legíveis, reprodutíveis, eficientes e organizados.
-
-
----
-background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-1-1.png)
-background-position: 80% 50%
-background-size: 100%
-
-# Questionário
-
----
-background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-2-1.png)
-background-position: 80% 50%
-background-size: 70%
-
-# Questionário
-
----
-background-image: url(https://curso-r.github.io/verao2017/questionario/figures/unnamed-chunk-3-1.png)
-background-position: 80% 50%
-background-size: 100%
-
-# Questionário
-
----
-
-# Workflow das aulas
-
-- Aulas no laboratório de computação (CEC).
-- Exercícios e laboratórios durante as aulas.
-    - entrega por e-mail com prazos a combinar.
-- Leituras complementares e opcionais fora da sala de aula.
-
----
-
-# Requisitos básicos
-
-- Lógica de programação.
-- Veja [essa apresentação (aprox. 10 min)](http://curso-r.github.io/slides/aula_00_01_apresentacao.html) (slides: 13 ao 43).
-- Leia esse [post de blog (aprox. 5 min)](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/).
-- Se quiser ganhar tempo, [crie uma conta no Github](http://github.com).
-
----
-
-### **Aula 01** - 30/01: Introdução ao R, Rstudio e `tidyverse`
+ - operadores aritméticos
+ - operadores lógicos
 
 ```{r}
-matrix(1:10, ncol = 2)
+(2 - 1/pi) * 4
+2 - 1/pi * 4
+
+sin(2*pi)
+cos(pi/2)
+
+logico <- TRUE
+
+1  < 2
+2  <= 1
+2  > 1
+1  >= 1
+.99999999999999999999  == 1
+#.99999999999999 =  1
+
+!1 < 2
+c(1, 2, 3) * 10
+```
+
+[https://curso-r.github.io/verao2017/rbase/#miscelâneas](https://curso-r.github.io/verao2017/rbase/#miscelâneas)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Pedindo ajuda 
+
+- Help / documentação do R (comandos `help(funcao)` ou `?funcao`)
+- Google
+- Stack Overflow
+- Colega
+
+### Documentação do R
+
+A documentação do R serve para você aprender a usar uma determinada função.
+
+```{r, eval=FALSE}
+?sin
+help(mean)
+
+mean(c(1, 2, pi))
+
+quantile
+```
+
+### Google
+
+
+### Stack Overflow
+
+O [Stack Overflow](http://stackoverflow.com/) e o [Stack Overflow em Português](http://pt.stackoverflow.com/) são sites de Pergunta e Resposta amplamente utilizados por todas as linguagens de programação e R é uma delas.
+
+**Um ponto importante:** Como fazer uma **boa** pergunta no Stack Overflow?
+
+No site tem um tutorial com uma lista de boas práticas, [que se encontra aqui](http://pt.stackoverflow.com/help/how-to-ask). Algumas dicas são
+
+- Ser conciso
+- Ser específico
+- Ter mente aberta
+- Ser gentil
+
+TAG: **[curso-r-2017]**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## instalar pacotes
+
+ - via R
+ - via Github
+ - via arquivo
+ - abinha de packages do RStudio
+
+### via R
+
+```{r eval = FALSE}
+install.packages("magrittr")
+
+# e daí em diante, só carregar quando precisar
+library(magrittr)
 ```
 
 
----
 
-### **Aula 02** - 01/02: Manipulação de vetores com `lubridate`, `stringr` e `forcats`
+### via Github
 
-```{r, warning=F,message=F}
-library(lubridate)
-dmy('10/12/2015')
+[https://github.com/rstudio/shiny](https://github.com/rstudio/shiny)
+
+```{r, eval=FALSE, echo=FALSE}
+if (!require("devtools"))
+  install.packages("devtools")
+devtools::install_github("rstudio/shiny")
 ```
 
---
+### Via arquivo .zip/.tar.gz
 
-```{r, warning=F,message=F}
-library(stringr)
-str_match('um texto muito loUco', '^um.+(texto).+(lo[uU]co).*$')
+```{r, eval=FALSE}
+install.packages("C:/caminho/para/o/arquivo/zipapo/pacote.zip", 
+                 repos = NULL)
 ```
 
---
 
-```{r, warning=F,message=F}
-library(forcats)
-fct_lump(c(letters[1:10], letters), n = 1)
-```
 
----
 
-### **Aula 03** - 03/02: Manipulação de dados com `dplyr` e `tidyr`
 
-```{r warning=F, message=F}
-library(dplyr)
-library(abjData)
-pnud_min %>% 
-  select(ano, regiao, idhm) %>% 
-  filter(ano == 2010) %>% 
-  group_by(regiao) %>% 
-  summarise(media = mean(idhm)) %>% 
-  arrange(desc(media)) %>% 
-  mutate(media = scales::percent(media))
-```
 
----
 
-### **Aula 04** - 06/02: Visualização com `ggplot2`
 
-```{r, fig.width=9, fig.height=3}
-library(ggplot2)
-ggplot(mtcars, aes(mpg, disp, colour = factor(am))) + 
-  geom_point() +
-  theme_bw()
-```
 
----
 
-### **Aula 05** - 08/02: Programação funcional com `purrr` e `plyr`
+
+
+
+
+
+
+
+
+
+## Controles de Fluxo
+
+ - if, else
+ - for
+ - while
+ 
+
+### if else
 
 ```{r}
-library(purrr)
-a <- list(c(1, 2), c(3, 4))
-b <- list(c(5, 6), c(7, 8))
-map2(a, b, ~.x + .y)
+x <- 1
+# x = 1
+
+if(x == 1) {
+  print("oi")
+} else if(x == 2) { # <--------- atenção na identação
+  print("tchau")
+} else if(x != 9) {
+  print("alo alo")
+} else {
+  print("ufa")
+}
 ```
 
----
-
-### **Aulas 06 e 07** - 10/02: Modelagem usando o R
-
-```{r message=FALSE, warning=F, fig.height=2.5, fig.width=9}
-library(captchaTJRS)
-a <- captchaTJRS::download('captcha.jpg')
-'captcha.jpg' %>% 
-  captchaTJRS::ler() %>% 
-  captchaTJRS::desenhar()
-```
-
-```{r message=FALSE, warning=F}
-captchaTJRS::predizer('captcha.jpg')
-```
-
----
-
-### **Aula 08** - 15/02: Temas escolhidos pelos alunos
-
-- Mapas
-- Web scraping
-- Modelos bayesianos
-- Análise de Sobrevivência
-- Big data
-- Text mining
-- Deep learning
-- Pacotes
-- Rcpp
-
----
-
-### **Aula 09** - 17/02: Shiny e tópicos sobre comunicação com o R.
-
-```{r, fig.width=9, fig.height=4}
-library(ggplot2)
-p <- ggplot(mtcars, aes(mpg, disp, colour = factor(am))) + geom_point()
-plotly::ggplotly(p)
-```
-
----
-
-# Não vamos falar de
-
-- Programação eficiente com R. Para isso, veja [esse livro](https://bookdown.org/csgillespie/efficientR/), que aborda temas importantíssimos como *profiling*, paralelização, `Rcpp`.
-
---
-
-- Não vamos nos aprofundar em "big data". Para isso estude sobre [sparklyr](http://spark.rstudio.com/), [tensorflow](https://rstudio.github.io/tensorflow/) e [mongodb](https://gist.github.com/Btibert3/7751989).
-
----
-
-# Diferenças entre C/C++ e R
-
-- `C`: eficiência e transparência, 
-- `R`: é análise de dados e interatividade. 
-
-Isso faz com que as duas linguagens sejam bem diferentes!
-
---
-
-Na prática, temos que
-
-- C é compilável, R é uma linguagem script.
-- R é uma linguagem funcional. Por exemplo, `(`, `&` e `+` são funções do R.
-- R é vetorizado. Observe esse sacrilégio
+ 
+### for
 
 ```{r}
-a <- c(1, 2, 3)
-b <- c(1, 2, 3, 4, 5, 6)
-a + b 
+for(contador in 1:5){
+  # várias coisas...
+  resultado <- contador^3
+  print(resultado)
+}
 ```
 
---
+```{r}
+for(i in c("a", "b", "c")) {
+  print(i)
+  
+  
+  
+  
+  
+  
+}
+```
 
-- Você raramente usará loops (`for`, `while`) no R.
 
----
-background-image: url(https://www.rstudio.com/wp-content/uploads/2014/06/RStudio-Ball.png)
-background-position: 50% 50%
-background-size: 50%
+```{r}
+vetor <- 30:35
+vetor2 <- 40:45
+indices <- seq_along(vetor)
+for(i in indices) {
+  print(vetor[1:i] + vetor2[1:i])
+}
+```
 
-Bora programar, abram o RStudio 
+### while
+
+```{r}
+# set.seed(1)
+jogadas <- 0
+coroa <- FALSE
+
+while(!coroa) {
+  coroa <- runif(1) > 0.5
+  jogadas <- jogadas + 1
+}
+
+jogadas
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Objetos
+
+ - atomic
+ - vetores
+ - matriz
+ - funções
+ - lista
+ - data.frame
+ - fatores
+ - valores especiais
+ - formulas (*)
+ 
+
+ 
+
+
+### Atomic
+
+Existem cinco classes básicas ou "atômicas" no R:
+
+- character `"UAH!"` (é o varchar do SQL)
+- numeric `0.95` (números reais)
+- integer `100515` (inteiros)
+- complex `2 + 5i` (números complexos, a + bi)
+- logical `TRUE` (booleanos, TRUE/FALSE)
+
+```{r}
+x <- "hello"
+y <- FALSE
+z <- 0.99
+```
+
+
+
+
+
+
+### Vetores
+
+Vetores possuem elementos de uma e apenas uma classe.
+
+```{r}
+vetor1 <- c(1, 2, 3, 4)
+vetor2 <- c(0, 10)
+vetor_palavras <- c(10, "1000", "USP")
+class(vetor1)
+```
+
+Misturando classes diferentes
+
+```{r, eval=FALSE}
+y <- c(1.7, "a")  ## character
+y <- c(TRUE, 2)   ## numeric
+y <- c(TRUE, "a") ## character
+y <- c(TRUE, FALSE, 10)
+
+length(y)
+y[1]
+y[4]
+y[c(1, 3, 1, 1)]
+y[y < 1]
+
+```
+
+**DOMINANTE** `character > complex > numeric > integer > logical` **RECESSIVO**
+
+
+
+
+
+### Matrizes
+
+Matrizes aceitam uma e apenas uma classe de objetos atômicos.
+
+```{r}
+m2 <- matrix(1:7, nrow = 2, ncol = 7)
+m2
+dim(m2) # funçăo dim() retorna a dimensăo do objeto.
+```
+
+```{r, eval=FALSE}
+m[2,  ]   # seleciona uma linha
+m[ , 3]   # seleciona uma coluna
+m[1, 2]   # seleciona um elemento
+t(m)      # matriz transposta
+
+n <- t(m)
+m %*% n  # multiplicação matricial
+m * m
+solve(m %*% n) %*% (m %*% n)  # matriz inversa
+```
+
+
+
+
+
+
+### Funções
+
+```{r}
+round(5.634)
+```
+
+```{r}
+dado <- 1:6
+round(mean(dado))
+```
+
+
+```{r}
+soma <- function(x, y = 10) {
+  resposta <- x + y
+  f <- function() { "alo"}
+  return(f)
+}
+```
+
+A função acima tem 
+
+- o nome `soma`
+- os argumentos `x` e `y`
+- o corpo `resposta <- x + y`
+- o valor padrão `0` para o argumento `y` (`y = 0`)
+
+Para usá-la é como qualquer outra função:
+
+```{r}
+soma(2, 1) # soma de 2 + 1
+soma(2) # soma de 2 + 0
+```
+
+
+
+
+
+### Listas
+
+```{r}
+x <- list(1:5, "Z", TRUE, c("a", "b"))
+x
+```
+
+```{r}
+pedido <- list(pedido_id = 8001406,
+               pedido_registro = as.Date("2016-12-12"),
+               nome = "Athos", 
+               sobrenome = "Petri Damiani", 
+               cpf = "12345678900", 
+               email = "athos.damiani@gmail.com", 
+               qualidades = c("incrível", "impressionante"),
+               itens = list(
+                 list(descricao = "Ferrari", 
+                      frete = 0, 
+                      valor = 500000),
+                 list(descricao = "Dolly", 
+                      frete = 1.5, 
+                      valor = 3.90)
+               ), 
+               endereco = list(entrega = list(logradouro = "Rua da Glória", 
+                                              numero = "123",
+                                              complemento = "apto 71"),
+                               cobranca = list(logradouro = "Rua Jose de Oliveira Coutinho",
+                                               numero = "151",
+                                               complemento = "5o andar")
+               )
+)
+```
+
+**Utilidades**
+
+```{r, eval=FALSE}
+pedido$cpf     # elemento chamado 'cpf'
+pedido[1]      # nova lista com apenas o primeiro elemento
+pedido[[2]]    # segundo elemento
+pedido["nome"] # nova lista com apenas o elemento chamado 'nome'
+```
+
+
+
+
+
+
+### data.frame
+
+Algumas funções úteis:
+
+
+```{r, error=TRUE}
+minha_lista <- list(x = c(1, 2, 3), y = c("a", "b"))
+as.data.frame(minha_lista)
+```
+
+```{r}
+minha_lista <- list(x = c(1, 2, 3), y = c("a", "b", "c"))
+as.data.frame(minha_lista)
+```
+
+- `head()` Mostra as primeiras 6 linhas.
+- `tail()` Mostra as últimas 6 linhas.
+- `dim()` Número de linhas e de colunas.
+- `names()` Os nomes das colunas (variáveis).
+- `str()` Estrutura do data.frame. Mostra, entre outras coisas, as classes de cada coluna.
+- `cbind()` Acopla duas tabelas lado a lado.
+- `rbind()` Empilha duas tabelas.
+
+```{r}
+head(iris)  
+str(iris)
+```
+
+
+
+
+
+
+### Valores especiais
+
+Existem valores reservados para representar dados faltantes, infinitos, e indefiniçőes matemáticas.
+
+- **NA** (Not Available) significa dado faltante/indisponível. 
+- **NaN** (Not a Number) representa indefinições matemáticas, como `0/0` e `log(-1)`. Um `NaN` é um `NA`, mas a recíproca não é verdadeira.
+- **Inf** 
+- **NULL** 
+- Use as funções `is.na()`, `is.nan()`, `is.infinite()` e `is.null()` para testar se um objeto é um desses valores.
+
+```{r}
+x <- c(NaN, Inf, 1, 2, 3, NA)
+is.na(x)
+is.nan(x)
+```
+
+
+
+
+
+### Fatores
+
+```{r}
+sexo <- c("M", "H", "H", "H", "M", "M", "H")
+fator <- as.factor(sexo)
+fator
+```
+
+```{r}
+as.numeric(fator)
+# levels(fator)
+```
