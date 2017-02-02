@@ -1,10 +1,10 @@
 Package: slides2017
-Title: What the Package Does (one line, title case)
+Title: Slides Do Curso "R: Do Básico Ao Avançado"" De 2017
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Athos", "Damiani", email = "adamiani@gmail.com", role = c("aut", "cre"))
+Description: Armazena e dispobiniliza o conteúdo das aulas do curso de verão de R de 2017.
 Depends: R (>= 3.3.2)
-License: What license is it under?
+License: MIT + LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: captchaTJRS,
