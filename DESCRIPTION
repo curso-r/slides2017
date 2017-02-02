@@ -20,7 +20,8 @@ Imports: captchaTJRS,
     forcats,
     dplyr,
     ggplot2,
-    purrr
+    purrr,
+    plotly
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData
