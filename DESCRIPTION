@@ -13,6 +13,9 @@ Imports: captchaTJRS,
     tibble,
     readxl,
     stringr,
-    devtools
+    devtools,
+    abjData,
+    abjutils
 Remotes: platipusc/captchaTJRS,
-         yihui/xaringan
+         yihui/xaringan,
+         abjur/abjData

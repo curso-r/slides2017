@@ -1,6 +1,7 @@
 library(knitr)
 library(magrittr)
 
+dir.create("content/")
 ex_dir <- normalizePath("content/")
 
 dir.create(ex_dir)
