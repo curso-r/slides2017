@@ -15,7 +15,12 @@ Imports: captchaTJRS,
     stringr,
     devtools,
     abjData,
-    abjutils
+    abjutils,
+    lubridate,
+    forcats,
+    dplyr,
+    ggplot2,
+    purrr
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData
