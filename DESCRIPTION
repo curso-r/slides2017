@@ -21,7 +21,9 @@ Imports: captchaTJRS,
     dplyr,
     ggplot2,
     purrr,
-    plotly
+    plotly,
+    tidyr,
+    magrittr
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData
