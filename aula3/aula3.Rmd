@@ -1,0 +1,292 @@
+---
+title: "Transformação"
+---
+
+## Wrangle
+
+```{r transform, echo=FALSE, fig.cap='Transformação no ciclo da ciência de dados.'}
+knitr::include_graphics('http://r4ds.had.co.nz/diagrams/data-science-wrangle.png')
+```
+
+
+> "(...) The fact that data science exists as a field is a colossal failure of statistics. To me, what I do is what statistics is all about. It is gaining insight from data using modelling and visualization. Data munging and manipulation is hard and statistics has just said that’s not our domain."
+> 
+> Hadley Wickham
+
+- Tarefa dolorosa e demorada
+- Essencial em qualquer análise de dados
+- Partimos de uma base "crua" e a transforma até obter uma base de dados analítica. 
+
+## Tidy data
+
+1. Cada linha da base representa uma observação.
+2. Cada coluna da base representa uma variável.
+3. ~~Cada tabela considera informações de uma unidade amostral.~~
+
+## Pipe `%>%`
+
+As duas linhas abaixo são equivalentes:
+
+```{r, eval=FALSE}
+f(x, y)
+x %>% f(y)
+```
+
+
+```{r eval=FALSE}
+install.packages("magrittr")
+```
+
+- calcular raiz quadrada da soma dos valores de 1 a 4.
+
+```{r}
+library(magrittr)
+
+x <- c(1, 2, 3, 4)
+x %>% sum %>% sqrt
+```
+
+Escrever esse cálculo na forma usual ficaria da seguinte forma:
+
+```{r}
+sqrt(sum(x))
+```
+
+
+## Receita de bolo
+
+```{r, eval=FALSE}
+
+esfrie(asse(coloque(bata(acrescente(recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo"), "farinha", até = "macio"), duração = "3min"), lugar = "forma", tipo = "grande", untada = TRUE), duração = "50min"), "geladeira", "20min")
+
+```
+
+Tente entender o que é preciso fazer. Depois de desistir, veja como fica escrevendo com o operador `%>%`:
+
+```{r, eval=FALSE}
+
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %>%
+  acrescente("farinha", até = "macio") %>%
+  bata(duraço = "3min") %>%
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %>%
+  asse(duração = "50min") %>%
+  esfrie("geladeira", "20min")
+
+```
+
+Agora o código realmente parece uma receita de bolo.
+
+Para mais informações sobre o `pipe` e exemplos de utilização, visite a página [Ceci n'est pas un pipe](http://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html).
+
+## Pacotes `dplyr` e `tidyr`
+
+- Revolução do R!
+
+### Trabalhando com `tibble`s
+
+Uma `tibble` nada mais é do que um `data.frame`, mas com um método de impressão mais adequado. Outras diferenças podem ser estudadas [neste link](http://r4ds.had.co.nz/tibbles.html).
+
+Considere a seguinte base de dados.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(tidyr)
+pnud_min <- readRDS('inputs/pnud_min.rds')
+```
+
+```{r}
+pnud_min
+```
+
+## Base IDH-Municipal - PNUD
+
+- `ano` ano do Censo.
+- `muni` nome do município. Cada município aparece três vezes, um para cada ano.
+- `uf` Unidade Federativa.
+- `regiao` região brasileira.
+- `idhm` IDH municipal, dividido em
+    - `idhm_e` IDH municipal - educação.
+    - `idhm_l` IDH municipal - longevidade.
+    - `idhm_r` IDH municipal - renda.
+- `espvida` expectativa de vida.
+- `rdpc` renda *per capita*.
+- `gini` coeficiente de gini municipal (mede desigualdade social).
+- `pop` população residente do município.
+- `lat`, `lon` latitude e longitude do município (ponto médio).
+
+## Os cinco verbos do `dplyr`
+
+- `filter`: filtrar linhas.
+- `select`: selecionar colunas.
+- `mutate`: criar/modificar colunas.
+- `arrange`: ordenar a base.
+- `summarise`: sumarizar a base em uma linha.
+
+### Características
+
+- O _input_  é sempre uma `tibble`, e o _output_  é sempre um `tibble`.
+- No primeiro argumento colocamos o `tibble`, e nos outros argumentos colocamos o que queremos fazer.
+- A utilização é facilitada com o emprego do operador `%>%`.
+- O pacote faz uso de NSE (*non standard evaluation*).
+
+### Vantagens
+
+- Utiliza `C` e `C++` por trás da maioria das funções, o que geralmente torna o código mais eficiente.
+- Pode trabalhar com diferentes fontes de dados, como bases relacionais (SQL) e `data.table`.
+
+## `select`
+
+- Utilizar `starts_with(x)`, `contains(x)`, `matches(x)`, `one_of(x)`, etc.
+- Possível colocar nomes, índices, e intervalos de variáveis com `:`.
+
+```{r}
+pnud_min %>% 
+  select(ano, regiao, muni)
+```
+
+```{r}
+pnud_min %>% 
+  select(ano:regiao, rdpc)
+```
+
+```{r}
+pnud_min %>% 
+  select(ano, starts_with('idhm'))
+```
+
+--------------------------------------
+
+## `filter`
+
+- Parecido com `subset`.
+- Condições separadas por vírgulas é o mesmo que separar por `&`.
+
+```{r}
+pnud_min %>% 
+  select(ano, muni, uf) %>% 
+  filter(uf == 'AC')
+```
+
+Para fazer várias condições, use os operadores lógicos (`&` e `|`) ou separando filtros entre vírgulas.
+
+```{r}
+pnud_min %>% 
+  select(ano, regiao, uf, idhm) %>% 
+  filter(uf %in% c('SP', 'MG') | idhm > .5, ano == 2010)
+  # é igual a
+  # filter(uf %in% c('SP', 'MG') | idhm > .5 & ano == 2010)
+```
+
+```{r}
+library(stringr)
+pnud_min %>% 
+  select(muni, ano, uf) %>% 
+  filter(str_detect(muni, '^[HG]|S$'), 
+         ano == 1991)
+```
+
+-----------------------------------------------------
+
+## `mutate`
+
+- Parecido com `transform`, mas aceita várias novas colunas iterativamente.
+- Novas variáveis devem ter o mesmo `length` que o `nrow` do bd oridinal ou `1`.
+
+```{r}
+pnud_min %>% 
+  select(muni, rdpc, pop, idhm_l, espvida) %>% 
+  mutate(renda = rdpc * pop, 
+         razao = idhm_l / espvida)
+  
+```
+
+-----------------------------------------------------
+
+## `arrange`
+
+- Simplesmente ordena de acordo com as opções.
+- Utilizar `desc` para ordem decrescente.
+
+```{r}
+pnud_min %>% 
+  filter(ano == 2010) %>% 
+  arrange(desc(espvida))
+```
+
+-----------------------------------------------------
+
+## `summarise`
+
+- Retorna um vetor de tamanho `1` a partir de uma conta com as variáveis.
+- Geralmente é utilizado em conjunto com `group_by`.
+- Algumas funções importantes: `n()`, `n_distinct()`.
+
+```{r}
+pnud_min %>% 
+  group_by(regiao, uf) %>% 
+  summarise(n = n(), espvida = mean(espvida)) %>% 
+  arrange(regiao, desc(espvida))
+```
+
+```{r}
+pnud_min %>% 
+  filter(ano == 2010) %>% 
+  count(regiao, sort = TRUE) %>% 
+  mutate(prop = n / sum(n), prop = scales::percent(prop))
+```
+
+
+-----------------------------------------------------
+
+## `gather`
+
+- "Empilha" o banco de dados
+
+```{r warning=FALSE, message=FALSE}
+pnud_min %>% 
+  select(uf, muni, ano, starts_with('idhm_')) %>% 
+  gather(tipo_idhm, idhm, starts_with('idhm_')) %>% 
+  arrange(desc(idhm))
+```
+
+-----------------------------------------------------
+
+## `spread`
+
+- "Joga" uma variável nas colunas
+- É essencialmente a função inversa de `gather`
+
+```{r}
+pnud_min %>% 
+  select(muni, uf, ano, starts_with('idhm_')) %>% 
+  gather(tipo_idhm, idhm, starts_with('idhm_')) %>% 
+  spread(ano, idhm)
+```
+
+-----------------------------------------------------
+
+## Funções auxiliares
+
+- `unite` junta duas ou mais colunas usando algum separador (`_`, por exemplo).
+- `separate` faz o inverso de `unite`, e uma coluna em várias usando um separador.
+
+```{r}
+pnud_min %>% 
+  select(muni, uf, ano, starts_with('idhm_')) %>% 
+  gather(tipo_idhm, idhm, starts_with('idhm_')) %>% 
+  separate(tipo_idhm, c('idhm_nm', 'tipo'), sep = '_') %>% 
+  select(-idhm_nm) %>% 
+  filter(ano == 2010) %>% 
+  group_by(tipo) %>% 
+  summarise(maior = muni[which.max(idhm)], idhm = max(idhm)) %>% 
+  arrange(tipo, desc(idhm))
+```
+
+-----------------------------------------------------
+
+## Um pouco mais de transformação de dados
+
+- Para juntar tabelas, usar `inner_join`, `left_join`, `anti_join`, etc.
+- Para realizar operações mais gerais, usar `do`.
+- Para retirar duplicatas, utilizar `distinct`.
+
