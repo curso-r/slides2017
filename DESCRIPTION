@@ -23,7 +23,8 @@ Imports: captchaTJRS,
     purrr,
     plotly,
     tidyr,
-    magrittr
+    magrittr,
+    readr
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData
