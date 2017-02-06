@@ -6,7 +6,7 @@ title: "Visualização"
 ## Introdução
 
 
-```{r transform, echo=FALSE, fig.cap='Lousa mágica Toy Story.'}
+```{r, echo=FALSE, fig.cap='ggplot2.'}
 knitr::include_graphics('inputs/ggplot2.png')
 ```
 
@@ -40,12 +40,12 @@ knitr::include_graphics('inputs/ggplot2.png')
 
 
 
-```{r transform, echo=FALSE, fig.cap='Gráficos no R base.'}
+```{r, echo=FALSE, fig.cap='Gráficos no R base.'}
 knitr::include_graphics('inputs/Etch.jpg')
 ```
 
 
-```{r transform, echo=FALSE, fig.cap='Gráficos com ggplot2.'}
+```{r, echo=FALSE, fig.cap='Gráficos com ggplot2.'}
 knitr::include_graphics('inputs/mrpotatohead.jpg')
 ```
 
