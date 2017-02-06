@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="William" />
+
+
+<title>aula4</title>
+
+<script src="aula4_files/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="aula4_files/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="aula4_files/bootstrap/js/bootstrap.min.js"></script>
+<script src="aula4_files/bootstrap/shim/html5shiv.min.js"></script>
+<script src="aula4_files/bootstrap/shim/respond.min.js"></script>
+<script src="aula4_files/navigation/tabsets.js"></script>
+<link href="aula4_files/highlightjs/default.css" rel="stylesheet" />
+<script src="aula4_files/highlightjs/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">aula4</h1>
+<h4 class="author"><em>William</em></h4>
+<h4 class="date"><em>6 de fevereiro de 2017</em></h4>
+
+</div>
+
+
+<div id="introducao" class="section level2">
+<h2>Introdução</h2>
+<p><img src="inputs/ggplot2.png" alt="" /><!-- --></p>
+<ul>
+<li>Criado pelo Hadley Wickham</li>
+<li><p>Gramática dos gráficos (Leland Wilkinson) -&gt; o que é um gráfico estatístico?</p></li>
+<li><p>Mapeamento dos dados a partir dos atributos estéticos (posição, cores, formas, tamanhos) de formas geométricas (pontos, linhas, barras)</p></li>
+</ul>
+</div>
+<div id="por-que-utilizar-o-ggplot" class="section level2">
+<h2>Por que utilizar o ggplot?</h2>
+<div class="figure">
+<img src="inputs/Etch.jpg" alt="Gráficos no R base." width="554" />
+<p class="caption">
+Gráficos no R base.
+</p>
+</div>
+<div class="figure">
+<img src="inputs/mrpotatohead.jpg" alt="Gráficos com ggplot2." width="620" />
+<p class="caption">
+Gráficos com ggplot2.
+</p>
+</div>
+<ul>
+<li>construção é intuitiva e organizada</li>
+<li>a estrutura é a mesma para todo tipo de gráfico</li>
+<li>os gráficos já são naturalmente mais bonitos</li>
+</ul>
+</div>
+<div id="visualizacao-banco-de-dados-imdb" class="section level2">
+<h2>Visualização (banco de dados IMDB)</h2>
+<p>Kaggle: site de desafio de análises de dados</p>
+<p><a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Link do desafio do IMDB</a></p>
+</div>
+<div id="instalar-pacotes" class="section level2">
+<h2>Instalar pacotes</h2>
+<pre class="r"><code>library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(forcats)
+library(readr)
+library(tidyr)</code></pre>
+</div>
+<div id="ler-dados" class="section level2">
+<h2>Ler dados</h2>
+<pre class="r"><code>dados &lt;- read_rds(&quot;inputs/dados_imdb.rds&quot;)
+dados</code></pre>
+<pre><code>## # A tibble: 5,043 × 15
+##                                    movie_title title_year
+##                                          &lt;chr&gt;      &lt;int&gt;
+## 1                                      Avatar        2009
+## 2    Pirates of the Caribbean: At World&#39;s End        2007
+## 3                                     Spectre        2015
+## 4                       The Dark Knight Rises        2012
+## 5  Star Wars: Episode VII - The Force Awakens          NA
+## 6                                 John Carter        2012
+## 7                                Spider-Man 3        2007
+## 8                                     Tangled        2010
+## 9                     Avengers: Age of Ultron        2015
+## 10     Harry Potter and the Half-Blood Prince        2009
+## # ... with 5,033 more rows, and 13 more variables: director_name &lt;chr&gt;,
+## #   duration &lt;int&gt;, color &lt;chr&gt;, genres &lt;chr&gt;, country &lt;chr&gt;,
+## #   content_rating &lt;chr&gt;, budget &lt;int&gt;, gross &lt;int&gt;, imdb_score &lt;dbl&gt;,
+## #   movie_facebook_likes &lt;int&gt;, actor_1_name &lt;chr&gt;, actor_2_name &lt;chr&gt;,
+## #   actor_3_name &lt;chr&gt;</code></pre>
+</div>
+<div id="grafico-de-dispersao-arrecadacao-vs-orcamento" class="section level2">
+<h2>Gráfico de dispersão: arrecadação vs orçamento</h2>
+<pre class="r"><code>ggplot(data = dados) +
+  geom_point(aes(x = budget, y = gross))</code></pre>
+<pre><code>## Warning: Removed 1156 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="verificando-valor-estranho" class="section level2">
+<h2>Verificando valor estranho</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(budget &gt; 2e+09) %&gt;% 
+  select(movie_title, title_year, country)</code></pre>
+<pre><code>## # A tibble: 1 × 3
+##   movie_title title_year country
+##         &lt;chr&gt;      &lt;int&gt;   &lt;chr&gt;
+## 1   Steamboy        2004   Japan</code></pre>
+</div>
+<div id="filtrando-apenas-para-filmes-norte-americanos" class="section level2">
+<h2>Filtrando apenas para filmes norte-americanos</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(country == &quot;USA&quot;) %&gt;%
+  ggplot +
+  geom_point(aes(x = budget, y = gross))</code></pre>
+<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="mapeando-a-cor" class="section level2">
+<h2>Mapeando a cor</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  mutate(ano_c = ifelse(title_year &lt; 2000, &quot;periodo1&quot;, &quot;periodo2&quot;)) %&gt;% 
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = ano_c))</code></pre>
+<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="e-se-usarmos-o-ano-como-variavel-continua" class="section level2">
+<h2>E se usarmos o ano como variável contínua?</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = title_year))</code></pre>
+<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="acrescentando-a-reta-y-x" class="section level2">
+<h2>Acrescentando a reta y = x</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = title_year)) +
+  geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;)</code></pre>
+<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="mapeando-a-forma-dos-pontos" class="section level2">
+<h2>Mapeando a forma dos pontos</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  mutate(content_rating = content_rating %&gt;% as.factor %&gt;% 
+           fct_collapse(Outros = c(&quot;Approved&quot;, &quot;G&quot;, &quot;GP&quot;, &quot;M&quot;, &quot;Not Rated&quot;,
+                                   &quot;Passed&quot;, &quot;TV-14&quot;, &quot;TV-G&quot;, &quot;TV-MA&quot;, &quot;TV-PG&quot;,
+                                   &quot;TV-Y7&quot;, &quot;Unrated&quot;, &quot;X&quot;))) %&gt;% 
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = title_year, shape = content_rating)) +
+  geom_abline(intercept = 0, slope = 1)</code></pre>
+<pre><code>## Warning: Removed 755 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="reordenando-os-niveis-da-classificacao" class="section level2">
+<h2>Reordenando os níveis da classificação</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  mutate(content_rating = content_rating %&gt;% as.factor %&gt;% 
+           fct_collapse(Outros = c(&quot;Approved&quot;, &quot;G&quot;, &quot;GP&quot;, &quot;M&quot;, &quot;Not Rated&quot;,
+                                   &quot;Passed&quot;, &quot;TV-14&quot;, &quot;TV-G&quot;, &quot;TV-MA&quot;, &quot;TV-PG&quot;,
+                                   &quot;TV-Y7&quot;, &quot;Unrated&quot;, &quot;X&quot;)),
+         content_rating = lvls_reorder(content_rating, c(3, 4, 5, 2, 1))) %&gt;%
+  
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = title_year, shape = content_rating)) +
+  geom_abline(intercept = 0, slope = 1)</code></pre>
+<pre><code>## Warning: Removed 755 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="labels" class="section level1">
+<h1>Labels</h1>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  mutate(content_rating = content_rating %&gt;% as.factor %&gt;% 
+           fct_collapse(Outros = c(&quot;Approved&quot;, &quot;G&quot;, &quot;GP&quot;, &quot;M&quot;, &quot;Not Rated&quot;,
+                                   &quot;Passed&quot;, &quot;TV-14&quot;, &quot;TV-G&quot;, &quot;TV-MA&quot;, &quot;TV-PG&quot;,
+                                   &quot;TV-Y7&quot;, &quot;Unrated&quot;, &quot;X&quot;)),
+         content_rating = lvls_reorder(content_rating, c(3, 4, 5, 2, 1))) %&gt;%
+  
+  ggplot +
+  geom_point(aes(x = budget, y = gross, color = title_year, shape = content_rating)) +
+  geom_abline(intercept = 0, slope = 1) +
+  labs(x = &quot;Orçamento&quot;, y = &quot;Arrecadação&quot;, color = &quot;Ano de\nLançamento&quot;,
+       shape = &quot;Classificação&quot;)</code></pre>
+<pre><code>## Warning: Removed 755 rows containing missing values (geom_point).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div id="boxplot-arrecadacoes-x-diretores-7-com-mais-filmes" class="section level2">
+<h2>Boxplot: Arrecadações x diretores (7 com mais filmes)</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(country == &quot;USA&quot;) %&gt;%
+  count(director_name, sort = T)</code></pre>
+<pre><code>## # A tibble: 1,813 × 2
+##        director_name     n
+##                &lt;chr&gt; &lt;int&gt;
+## 1               &lt;NA&gt;    74
+## 2   Steven Spielberg    24
+## 3     Clint Eastwood    20
+## 4    Martin Scorsese    20
+## 5        Woody Allen    18
+## 6          Spike Lee    16
+## 7         Tim Burton    16
+## 8  Steven Soderbergh    15
+## 9       Renny Harlin    14
+## 10      Ridley Scott    14
+## # ... with 1,803 more rows</code></pre>
+<pre class="r"><code>dados %&gt;% 
+  filter(country == &quot;USA&quot;, !is.na(director_name)) %&gt;%
+  group_by(director_name) %&gt;% 
+  filter(n() &gt;= 15) %&gt;% 
+  ggplot +
+  geom_boxplot(aes(x = as.factor(director_name), y = gross))</code></pre>
+<pre><code>## Warning: Removed 8 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="arrumando-labels-do-eixo-x" class="section level2">
+<h2>Arrumando labels do eixo x</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(country == &quot;USA&quot;, !is.na(director_name)) %&gt;%
+  group_by(director_name) %&gt;% 
+  filter(n() &gt;= 15) %&gt;% 
+  ggplot +
+  geom_boxplot(aes(x = as.factor(director_name), y = gross)) +
+  theme(axis.text.x = element_text(angle=70, vjust = 0.5))</code></pre>
+<pre><code>## Warning: Removed 8 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="ordenando-pela-mediana" class="section level2">
+<h2>Ordenando pela mediana</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(country == &quot;USA&quot;, !is.na(director_name), !is.na(gross)) %&gt;%
+  group_by(director_name) %&gt;% 
+  filter(n() &gt;= 15) %&gt;%
+  ungroup() %&gt;% 
+  mutate(director_name = director_name %&gt;% as.factor %&gt;%
+           fct_reorder(gross, fun = median)) %&gt;% 
+  ggplot +
+  geom_boxplot(aes(x = director_name, y = gross)) +
+  theme(axis.text.x = element_text(angle=70, vjust = 0.5))</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+</div>
+<div id="histograma-notas-do-ridley-scott" class="section level1">
+<h1>Histograma: notas do Ridley Scott</h1>
+<pre class="r"><code>dados %&gt;% 
+  filter(country == &quot;USA&quot;, director_name == &quot;Ridley Scott&quot;) %&gt;%  #
+  unique() %&gt;% 
+  ggplot +
+  geom_histogram(aes(x = imdb_score))</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div id="arrumando-o-numero-de-classes" class="section level2">
+<h2>Arrumando o número de classes</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name == &quot;Ridley Scott&quot;) %&gt;%  #
+  unique() %&gt;% 
+  ggplot +
+  geom_histogram(aes(x = imdb_score), binwidth = 0.5)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="mudando-a-cor" class="section level2">
+<h2>Mudando a cor</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name == &quot;Ridley Scott&quot;) %&gt;%  #
+  unique() %&gt;% 
+  ggplot +
+  geom_histogram(aes(x = imdb_score), binwidth = 0.5, color = &quot;white&quot;)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="mudando-a-cor---parte-ii" class="section level2">
+<h2>Mudando a cor - Parte II</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name == &quot;Ridley Scott&quot;) %&gt;%  #
+  unique() %&gt;% 
+  ggplot +
+  geom_histogram(aes(x = imdb_score), binwidth = 0.5, fill = &quot;white&quot;, color = &quot;black&quot;)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="grid-notas-do-tarantino-scorsese-e-tim-burton-ao-longo-do-tempo" class="section level2">
+<h2>Grid: notas do Tarantino, Scorsese e Tim Burton ao longo do tempo</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name %in% c(&quot;Quentin Tarantino&quot;, &quot;Martin Scorsese&quot;, &quot;Tim Burton&quot;)) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = title_year, y = imdb_score)) +
+  facet_grid(director_name~.)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="ligando-os-pontos" class="section level2">
+<h2>Ligando os pontos</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name %in% c(&quot;Quentin Tarantino&quot;, &quot;Martin Scorsese&quot;, &quot;Tim Burton&quot;)) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = title_year, y = imdb_score)) +
+  geom_line(aes(x = title_year, y = imdb_score)) +
+  facet_grid(director_name~.)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="escrevendo-de-outra-forma" class="section level2">
+<h2>Escrevendo de outra forma</h2>
+<pre class="r"><code>dados %&gt;% 
+  filter(director_name %in% c(&quot;Quentin Tarantino&quot;, &quot;Martin Scorsese&quot;, &quot;Tim Burton&quot;)) %&gt;% 
+  ggplot(aes(x = title_year, y = imdb_score)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(director_name~.)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="grafico-de-barras-atores-que-aparecem-em-mais-filmes" class="section level2">
+<h2>Grafíco de barras: atores que aparecem em mais filmes</h2>
+<pre class="r"><code>dados %&gt;%
+  gather(key = &quot;pos&quot;, value = &quot;ator&quot;, actor_1_name) %&gt;%
+  filter(!is.na(ator)) %&gt;% 
+  group_by(ator, pos) %&gt;%
+  filter(n() &gt;= 27) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = ator))</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="deixando-mais-bonito" class="section level2">
+<h2>Deixando mais bonito</h2>
+<pre class="r"><code>dados %&gt;%
+  gather(key = &quot;pos&quot;, value = &quot;ator&quot;, actor_1_name:actor_3_name) %&gt;%
+  filter(!is.na(ator)) %&gt;% 
+  group_by(ator) %&gt;%
+  filter(n() &gt;= 33) %&gt;%
+  ungroup %&gt;% 
+  mutate(ator = ator %&gt;% as.factor %&gt;% fct_reorder(ator, table)) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = ator), fill = &quot;dark green&quot;, color = &quot;white&quot;) +
+  theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="grafico-de-barras-stat-identity" class="section level2">
+<h2>Gráfico de barras: stat = “identity”</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(actor_1_name == &quot;Andrew Garfield&quot; |
+         actor_2_name == &quot;Andrew Garfield&quot; |
+         actor_3_name == &quot;Andrew Garfield&quot;,
+         !is.na(gross)) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = movie_title, y = gross), stat = &quot;identity&quot;) +
+  theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="deixando-mais-bonito-1" class="section level2">
+<h2>Deixando mais bonito</h2>
+<pre class="r"><code>dados %&gt;%
+  filter(actor_1_name == &quot;Andrew Garfield&quot; |
+         actor_2_name == &quot;Andrew Garfield&quot; |
+         actor_3_name == &quot;Andrew Garfield&quot;,
+         !is.na(gross)) %&gt;%
+  mutate(movie_title = movie_title %&gt;% as.factor %&gt;%
+           fct_reorder(gross, median)) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = movie_title, y = gross, fill = movie_title), stat = &quot;identity&quot;,
+           color = &quot;black&quot;) +
+  theme(axis.text.x = element_blank(), legend.position=&quot;bottom&quot;,
+        legend.title = element_blank()) +
+  ggtitle(&quot;Andrew Garfield, eu te odeio!&quot;)</code></pre>
+<p><img src="aula4_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="exercicios" class="section level2">
+<h2>Exercícios</h2>
+<p>1 - Refaça o primeiro gráfico (arrecadação vs orçamento) colocando junto dos pontos uma curva alisada. Dica: geom_smooth().</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Refazer o gráfico das notas do Tarantino, Scorsese e Tim Burton colocando as curvas no mesmo gráfico e as seprando pela cor. Dica: você vai precisar usar o argumento ‘group=’.</p></li>
+<li><p>Faça um gráfico para visualizar as 10 maiores bilheterias de 2016.</p></li>
+<li><p>Faça um gráfico para visualizar as notas dos filmes do seu ator ou diretor preferido. Se você não tiver um (ou se tiver poucas entradas no banco de dados), escolha uma opção a seguir:</p></li>
+</ol>
+<ul>
+<li>Steven Spielberg.</li>
+<li>Zack Snyder</li>
+<li>Robin Williams</li>
+<li>Hugh jackman</li>
+<li>Jennifer Lawrence</li>
+<li>Meryl Streep</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
