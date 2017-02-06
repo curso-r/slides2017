@@ -64,8 +64,7 @@ https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
 
 ## Instalar pacotes
 
-```{r, eval=FALSE}
-install.packages("ggplot2")
+```{r}
 library(ggplot2)
 library(magrittr)
 library(dplyr)
