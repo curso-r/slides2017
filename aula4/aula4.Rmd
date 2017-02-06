@@ -1,12 +1,15 @@
 ---
-title: "Visualização"
+title: "aula4"
+author: "William"
+date: "6 de fevereiro de 2017"
+output: html_document
 ---
 
 
 ## Introdução
 
 
-```{r, echo=FALSE, fig.cap='ggplot2.'}
+```{r, echo=FALSE}
 knitr::include_graphics('inputs/ggplot2.png')
 ```
 
@@ -59,7 +62,7 @@ knitr::include_graphics('inputs/mrpotatohead.jpg')
 
 Kaggle: site de desafio de análises de dados
 
-https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
+[Link do desafio do IMDB](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset)
 
 
 ## Instalar pacotes
@@ -70,6 +73,7 @@ library(magrittr)
 library(dplyr)
 library(forcats)
 library(readr)
+library(tidyr)
 ```
 
 ## Ler dados
