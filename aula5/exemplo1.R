@@ -15,5 +15,7 @@ ajuste <- lm(BODYFAT ~ WEIGHT, data = bodyfat)
 summary(ajuste)
 str(ajuste, max.level = 1)
 bodyfat$predito <- predict(ajuste, newdata = bodyfat)
-mse <- mean((bodyfat$BODYFAT - bodyfat$predito_modelo1)^2)
+mse <- mean((bodyfat$BODYFAT - bodyfat$predito)^2)
 erro_usando_media <- mean((bodyfat$BODYFAT - mean(bodyfat$BODYFAT))^2)
+
+
