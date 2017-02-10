@@ -21,7 +21,7 @@ library(dplyr)
 
 ```{r}
 # carregar uma imagem jpeg no R
-xadrez_jpeg <- readJPEG("aula6/xadrez_colorido.jpg") 
+xadrez_jpeg <- readJPEG("xadrez_colorido.jpg") 
 
 # transformar o array da imagem em data.frame com infos de posicao (x,y) e cor (r,g,b)
 # dimensões da imagem
