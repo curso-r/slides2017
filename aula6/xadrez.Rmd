@@ -28,7 +28,7 @@ xadrez_jpeg <- readJPEG("xadrez_colorido.jpg")
 xadrez_dm <- dim(xadrez_jpeg)
 
 # RGB para data.frame
-xadrez <- data.frame(
+xadrezdf <- data.frame(
   x = rep(1:xadrez_dm[2], each = xadrez_dm[1]),
   y = rep(xadrez_dm[1]:1, xadrez_dm[2]),
   r = as.vector(xadrez_jpeg[,,1]),
