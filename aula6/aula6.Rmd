@@ -1,0 +1,135 @@
+---
+title: "Aula 6 - Modelagem, pt 2"
+author: "Athos Damiani"
+date: "9 de fevereiro de 2017"
+output: html_document
+---
+
+## Cross-validation
+
+```{r, echo=FALSE, message=FALSE}
+# Pacotes -----------------------------------------------------------------
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+
+```
+
+```{r}
+
+# Gerar dados -------------------------------------------------------------
+set.seed(7)
+dados <- data_frame(
+  x = runif(10),
+  y = 2*x + 3*x^2 + rnorm(10, 0, 0.15) 
+)
+
+# gerando mais dados
+dados2 <- data_frame(
+  x = runif(100),
+  y = 2*x + 3*x^2 + rnorm(100, 0, 0.1) 
+)
+
+```
+
+
+```{r}
+
+ggplot(dados, aes(x = x, y = y)) + geom_point()
+
+```
+
+```{r, echo = FALSE}
+
+modelo <- lm(y ~ x, data = dados)
+modelo2 <- lm(y ~ poly(x, 2), data = dados)
+modelo3 <- lm(y ~ poly(x, 3), data = dados)
+modelo4 <- lm(y ~ poly(x, 4), data = dados)
+modelo5 <- lm(y ~ poly(x, 5), data = dados)
+modelo6 <- lm(y ~ poly(x, 6), data = dados)
+modelo7 <- lm(y ~ poly(x, 7), data = dados)
+modelo8 <- lm(y ~ poly(x, 8), data = dados)
+modelo9 <- lm(y ~ poly(x, 9), data = dados)
+
+erro_modelo1 <- mean((dados$y - predict(modelo, newdata = dados))^2)
+erro_modelo2 <- mean((dados$y - predict(modelo2, newdata = dados))^2)
+erro_modelo3 <- mean((dados$y - predict(modelo3, newdata = dados))^2)
+erro_modelo4 <- mean((dados$y - predict(modelo4, newdata = dados))^2)
+erro_modelo5 <- mean((dados$y - predict(modelo5, newdata = dados))^2)
+erro_modelo6 <- mean((dados$y - predict(modelo6, newdata = dados))^2)
+erro_modelo7 <- mean((dados$y - predict(modelo7, newdata = dados))^2)
+erro_modelo8 <- mean((dados$y - predict(modelo8, newdata = dados))^2)
+erro_modelo9 <- mean((dados$y - predict(modelo9, newdata = dados))^2)
+
+erro_ajuste <- c(erro_modelo1 = erro_modelo1,
+erro_modelo2 = erro_modelo2,
+erro_modelo3 = erro_modelo3,
+erro_modelo4 = erro_modelo4,
+erro_modelo5 = erro_modelo5,
+erro_modelo6 = erro_modelo6,
+erro_modelo7 = erro_modelo7,
+erro_modelo8 = erro_modelo8,
+erro_modelo9 = erro_modelo9) %>% round(3)
+
+ggplot(dados, aes(x = x, y = y)) + geom_point() + 
+  geom_smooth(formula = y ~ x, colour = "red", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 2), colour = "orange", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 3), colour = "purple", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 4), colour = "royalblue", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 5), colour = "grey", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 6), colour = "pink", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 7), colour = "brown", se = FALSE, method = 'lm') +
+  geom_smooth(formula = y ~ poly(x, 8), colour = "blue", se = FALSE, method = 'lm') 
+
+
+erro_modelo1 <- mean((dados2$y - predict(modelo, newdata = dados2))^2)
+erro_modelo2 <- mean((dados2$y - predict(modelo2, newdata = dados2))^2)
+erro_modelo3 <- mean((dados2$y - predict(modelo3, newdata = dados2))^2)
+erro_modelo4 <- mean((dados2$y - predict(modelo4, newdata = dados2))^2)
+erro_modelo5 <- mean((dados2$y - predict(modelo5, newdata = dados2))^2)
+erro_modelo6 <- mean((dados2$y - predict(modelo6, newdata = dados2))^2)
+erro_modelo7 <- mean((dados2$y - predict(modelo7, newdata = dados2))^2)
+erro_modelo8 <- mean((dados2$y - predict(modelo8, newdata = dados2))^2)
+erro_modelo9 <- mean((dados2$y - predict(modelo9, newdata = dados2))^2)
+
+erro_teste <- c(erro_modelo1 = erro_modelo1,
+                 erro_modelo2 = erro_modelo2,
+                 erro_modelo3 = erro_modelo3,
+                 erro_modelo4 = erro_modelo4,
+                 erro_modelo5 = erro_modelo5,
+                 erro_modelo6 = erro_modelo6,
+                 erro_modelo7 = erro_modelo7,
+                 erro_modelo8 = erro_modelo8,
+                 erro_modelo9 = erro_modelo9) %>% round(3)
+# 
+# ggplot(dados, aes(x = x, y = y)) + 
+#   geom_point(data = dados2, colour = "orange") + 
+#   geom_smooth(formula = y ~ x, colour = "red", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 2), colour = "orange", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 3), colour = "purple", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 4), colour = "royalblue", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 5), colour = "grey", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 6), colour = "pink", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 7), colour = "brown", se = FALSE, method = 'lm') +
+#   geom_smooth(formula = y ~ poly(x, 8), colour = "blue", se = FALSE, method = 'lm') +
+#   geom_point() 
+
+```
+
+```{r, echo=FALSE}
+
+cbind(erro_ajuste, erro_teste) %>%
+  as.data.frame %>%
+  mutate(grau_do_polinomio = 1:n()) %>%
+  filter(grau_do_polinomio < 7) %>%
+  gather(base, erro, starts_with("erro")) %>%
+  ggplot() +
+  geom_line(aes(x = grau_do_polinomio, y = erro, colour = base))
+  # geom_smooth(aes(x = grau_do_polinomio, y = erro, colour = base), span = 1, se = FALSE)
+```
+
+```{r}
+knitr::include_graphics("cross_validation.png")
+```
+

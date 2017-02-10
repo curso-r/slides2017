@@ -1,0 +1,65 @@
+---
+title: "xadrez"
+author: "Athos Damiani"
+date: "9 de fevereiro de 2017"
+output: html_document
+---
+
+```{r, message=FALSE}
+# pacotes necessários
+library(MASS)
+library(jpeg)
+library(randomForest)
+library(GGally)
+library(magrittr)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+```
+
+
+
+```{r}
+# carregar uma imagem jpeg no R
+xadrez_jpeg <- readJPEG("aula6/xadrez_colorido.jpg") 
+
+# transformar o array da imagem em data.frame com infos de posicao (x,y) e cor (r,g,b)
+# dimensões da imagem
+xadrez_dm <- dim(xadrez_jpeg)
+
+# RGB para data.frame
+xadrez <- data.frame(
+  x = rep(1:xadrez_dm[2], each = xadrez_dm[1]),
+  y = rep(xadrez_dm[1]:1, xadrez_dm[2]),
+  r = as.vector(xadrez_jpeg[,,1]),
+  g = as.vector(xadrez_jpeg[,,2]),
+  b = as.vector(xadrez_jpeg[,,3])
+) %>%
+  mutate(apenas_azul = rgb(0, 0, b),
+         original = rgb(r, g, b),
+         id = 1:n(),
+         b_backup = b,
+         b = 0)
+```
+
+
+```{r}
+# dividir o data.frame em partes de treino e teste.
+set.seed(1)
+
+xadrez_treino <- xadrezdf %>% sample_frac(3/5)
+
+xadrez_teste <- xadrezdf %>% 
+  filter(rownames(.) %in% rownames(xadrez_treino) %>% not)
+```
+
+
+
+
+
+
+
+
+
+
+
