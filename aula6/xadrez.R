@@ -96,6 +96,7 @@ xadrez_ggpairs <- xadrez %>%
   ggpairs
 
 xadrez_ggpairs
+onda_roxa_ggpairs
 
 
 
