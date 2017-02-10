@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Athos Damiani" />
+
+
+<title>Aula 6 - Modelagem, pt 2</title>
+
+<script src="aula6_files/jquery/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="aula6_files/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="aula6_files/bootstrap/js/bootstrap.min.js"></script>
+<script src="aula6_files/bootstrap/shim/html5shiv.min.js"></script>
+<script src="aula6_files/bootstrap/shim/respond.min.js"></script>
+<script src="aula6_files/navigation/tabsets.js"></script>
+<link href="aula6_files/highlightjs/default.css" rel="stylesheet" />
+<script src="aula6_files/highlightjs/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Aula 6 - Modelagem, pt 2</h1>
+<h4 class="author"><em>Athos Damiani</em></h4>
+<h4 class="date"><em>9 de fevereiro de 2017</em></h4>
+
+</div>
+
+
+<div id="agenda" class="section level2">
+<h2>Agenda</h2>
+<ul>
+<li>Instalar 3 pacotes</li>
+<li>Ver vídeo sobre RGB de 30 segundos</li>
+<li>Fazer análise estatística I (onda roxa)</li>
+<li>Fazer análise estatística II (xadrez)</li>
+<li>Fazer análise estatística III (som do captcha para letra)</li>
+</ul>
+</div>
+<div id="configuracoes" class="section level2">
+<h2>Configurações</h2>
+<pre class="r"><code>install.packages(&quot;GGally&quot;)
+install.packages(&quot;jpeg&quot;)
+install.packages(&quot;rpart.plot&quot;)</code></pre>
+<p><a href="https://www.youtube.com/watch?v=CrBFNLvoL6A">Vídeo sobre RGB</a></p>
+</div>
+<div id="cross-validation" class="section level2">
+<h2>Cross-validation</h2>
+<pre class="r"><code># Gerar dados -------------------------------------------------------------
+set.seed(7)
+dados &lt;- data_frame(
+  x = runif(10),
+  y = 2*x + 3*x^2 + rnorm(10, 0, 0.15) 
+)
+
+# gerando mais dados
+dados2 &lt;- data_frame(
+  x = runif(100),
+  y = 2*x + 3*x^2 + rnorm(100, 0, 0.1) 
+)</code></pre>
+<pre class="r"><code>ggplot(dados, aes(x = x, y = y)) + geom_point()</code></pre>
+<p><img src="aula6_files/figure-html/d-1.png" width="672" /></p>
+<p><img src="aula6_files/figure-html/e-1.png" width="672" /></p>
+<p><img src="aula6_files/figure-html/f-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
