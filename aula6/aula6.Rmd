@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ## Configurações
-```{r, eval = FALSE}
+```{r a, eval = FALSE}
 install.packages("GGally")
 install.packages("jpeg")
 install.packages("rpart.plot")
@@ -18,14 +18,14 @@ install.packages("rpart.plot")
 
 ## Cross-validation
 
-```{r, echo=FALSE, message=FALSE}
+```{r b, echo=FALSE, message=FALSE}
 # Pacotes -----------------------------------------------------------------
 library(ggplot2)
 library(tidyr)
 library(dplyr)
 ```
 
-```{r}
+```{r c}
 
 # Gerar dados -------------------------------------------------------------
 set.seed(7)
@@ -43,13 +43,13 @@ dados2 <- data_frame(
 ```
 
 
-```{r}
+```{r d}
 
 ggplot(dados, aes(x = x, y = y)) + geom_point()
 
 ```
 
-```{r, echo = FALSE}
+```{r e, echo = FALSE}
 
 modelo <- lm(y ~ x, data = dados)
 modelo2 <- lm(y ~ poly(x, 2), data = dados)
@@ -126,7 +126,7 @@ erro_teste <- c(erro_modelo1 = erro_modelo1,
 
 ```
 
-```{r, echo=FALSE}
+```{r f, echo=FALSE}
 
 cbind(erro_ajuste, erro_teste) %>%
   as.data.frame %>%
