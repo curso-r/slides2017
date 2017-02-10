@@ -4,7 +4,7 @@ author: "Athos Damiani"
 date: "9 de fevereiro de 2017"
 output: 
   html_document: 
-    self_contained: yes
+    self_contained: no
 ---
 
 ## Agenda
