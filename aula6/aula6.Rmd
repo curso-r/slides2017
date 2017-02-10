@@ -2,10 +2,13 @@
 title: "Aula 6 - Modelagem, pt 2"
 author: "Athos Damiani"
 date: "9 de fevereiro de 2017"
-output: html_document
+output: 
+  html_document: 
+    self_contained: yes
 ---
 
 ## Configurações
+
 ```{r a, eval = FALSE}
 install.packages("GGally")
 install.packages("jpeg")
@@ -126,8 +129,8 @@ erro_teste <- c(erro_modelo1 = erro_modelo1,
 
 ```
 
-```{r f, echo=FALSE}
 
+```{r f, echo=FALSE}
 cbind(erro_ajuste, erro_teste) %>%
   as.data.frame %>%
   mutate(grau_do_polinomio = 1:n()) %>%
