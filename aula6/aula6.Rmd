@@ -5,6 +5,17 @@ date: "9 de fevereiro de 2017"
 output: html_document
 ---
 
+## Configurações
+```{r, eval = FALSE}
+install.packages("GGally")
+install.packages("jpeg")
+install.packages("rpart.plot")
+```
+
+[Vídeo sobre RGB](https://www.youtube.com/watch?v=CrBFNLvoL6A)
+
+
+
 ## Cross-validation
 
 ```{r, echo=FALSE, message=FALSE}
@@ -12,8 +23,6 @@ output: html_document
 library(ggplot2)
 library(tidyr)
 library(dplyr)
-
-
 ```
 
 ```{r}
@@ -129,7 +138,4 @@ cbind(erro_ajuste, erro_teste) %>%
   # geom_smooth(aes(x = grau_do_polinomio, y = erro, colour = base), span = 1, se = FALSE)
 ```
 
-```{r}
-knitr::include_graphics("cross_validation.png")
-```
 

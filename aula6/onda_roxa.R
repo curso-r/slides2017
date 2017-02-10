@@ -1,3 +1,9 @@
+install.packages("GGally")
+install.packages("jpeg")
+install.packages("rpart.plot")
+
+https://www.youtube.com/watch?v=CrBFNLvoL6A
+
 # pacotes necessários
 library(MASS)
 library(jpeg)
