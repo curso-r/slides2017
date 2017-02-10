@@ -5,6 +5,20 @@ date: "9 de fevereiro de 2017"
 output: html_document
 ---
 
+## Agenda
+
+- Instalar 3 pacotes
+- Ver vídeo sobre RGB de 30 segundos
+- Fazer análise estatística I (onda roxa)
+- Fazer análise estatística II (xadrez)
+- Fazer análise estatística III (som do captcha para letra)
+
+
+
+
+
+
+
 ## Configurações
 ```{r a, eval = FALSE}
 install.packages("GGally")

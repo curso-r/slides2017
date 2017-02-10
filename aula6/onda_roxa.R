@@ -103,9 +103,7 @@ onda_roxa_ggpairs <- onda_roxa %>%
 
 onda_roxa_ggpairs
 
-
-
-
+predict(rpart(b ~ r, data = onda_roxa), newdata = onda_roxa)
 
 
 #-------------------------------------------------------------#
@@ -161,7 +159,7 @@ onda_roxa_tree_sem_cv <- rpart(b ~ r + x + y + g,
                               minbucket = 100,
                               minsplit = 100,
                               maxdepth = 30,
-                              cp = 0.0001)
+                              cp = 0.001)
 rpart.plot(onda_roxa_tree_sem_cv)
 printcp(onda_roxa_tree_sem_cv)
 plotcp(onda_roxa_tree_sem_cv)
@@ -179,14 +177,15 @@ onda_roxa_teste_com_predicoes <- onda_roxa_teste %>%
   tbl_df %>%
   mutate(lm_selecionado_sem_cv = predict(onda_roxa_lm_sem_cv, newdata = .),
          lm_selecionado_com_cv = predict(onda_roxa_lm_com_cv, newdata = .),
-         tree_selecionado_com_cv = predict(onda_roxa_tree_com_cv, newdata = .)) 
+         tree_selecionado_com_cv = predict(onda_roxa_tree_com_cv, newdata = .),
+         tree_selecionado_sem_cv = predict(onda_roxa_tree_sem_cv, newdata = .)) 
 
 # erros preditivos
 onda_roxa_teste_com_predicoes %>%
   gather(metodo_de_selecao, b_predito, contains("selecionado")) %>%
   mutate(residuo = b - b_predito) %>%
   group_by(metodo_de_selecao) %>%
-  summarise(mse = mean(residuo^2))
+  summarise(mse_1000 = mean(residuo^2) * 1000 %>% round(2))
 
 # gráfico
 onda_roxa_teste_com_predicoes_para_grafico <- onda_roxa_teste_com_predicoes %>%
@@ -207,14 +206,13 @@ onda_roxa_azuis_preditos <- onda_roxa_teste_com_predicoes_para_grafico %>%
 onda_roxa_azuis_preditos
 
 
+# intuição
+onda_roxa %>%
+  mutate(r_cat = predict(rpart(b ~ r, data = onda_roxa), newdata = onda_roxa)) %>%
+  arrange(b) %>%
+  ggplot() +
+  geom_point(aes(x = r, y = b)) +
+  stat_smooth(aes(x = r, y = b), method = "lm") +
+  geom_step(aes(x = r_cat, y = b), colour = "red")
 
 
-
-
-
-#-------------------------------------------------------------#
-# EXTRA!
-# Modelagem - regressão linear com criação de variáveis
-# onda_roxa_treino %<>%
-#   mutate(x_cat = cut(x, breaks = c(-Inf, 73, 75+16.67, 100+8.33, 125,Inf)),
-#          y_cat = cut(y, breaks = c(-Inf, range(y) %>% diff %>% divide_by(9) * 1:9, Inf)))
