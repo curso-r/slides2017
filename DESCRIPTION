@@ -24,7 +24,9 @@ Imports: captchaTJRS,
     plotly,
     tidyr,
     magrittr,
-    readr
+    readr,
+    GGally,
+    randomForest
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData
