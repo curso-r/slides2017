@@ -28,12 +28,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - O que o código abaixo faz?
 
-```{r, eval=F, echo=T}
+```{r, eval=FALSE, echo=TRUE}
 
 tabela_de_dados %>% 
-  remove_linhas_com_na() %>% 
-  transforma_textos_em_fatores() %>% 
-  plota_dose_contra_pressao()
+  remover_linhas_com_na() %>% 
+  transformar_textos_em_fatores() %>% 
+  plotar_dose_contra_pressao()
 
 ```
 
@@ -41,55 +41,86 @@ tabela_de_dados %>%
 
 - O que o código _realmente_ faz:
 
-```{r, eval = F, echo = T}
+```{r, eval=FALSE, echo=TRUE}
 
-remove_linhas_com_na <- function(dataset){
+remover_linhas_com_na <- function(dataset) {
   dataset %>% 
     filter(complete.cases(.))
 }
 
-transforma_textos_em_fatores <- function(dataset){
+transformar_textos_em_fatores <- function(dataset) {
   dataset %>% 
     mutate_all(is.character, funs(as.factor(.)))
 }
 
-plota_dose_contra_pressao <- function(dataset){
+plotar_dose_contra_pressao <- function(dataset) {
   ggplot(dataset, aes(x = dose, y = pressao)) +
     geom_point()
 }
- 
 ```
+
+--------------------------------------------------------------------
+
+## Princípios / Melhores práticas
+
+### Estilo
+
+- Tudo minúsculo
+- Separar por `_`
+- Funções são verbos, demais objetos são substantivos.
+
+### Processo de criação
+
+- Uma função faz uma coisa.
+- É fácil entender o que uma função faz.
+
+### Funções puras
+
+- Dois tipos
+  1. Ou causa um *side-effect* (salva um arquivo, mostra um gráfico etc).
+      - Pode retornar objetos de forma invisível (e.g. `ggplot2`)
+  2. Ou retorna um objeto.
+      - Facilita se puder combinar com `%>%`.
+
+### Funções anônimas
+
+- `function(x) x + 2`
+- Vamos ver um jeito de simplificar isso.
+
+--------------------------------------------------------------------
 
 ## Funcionais
 
 - Tem uma estrutura básica
+
 ```{r, eval = FALSE, echo = T}
-
-exemplo_de_funcional(
-  x, #objeto sobre o qual a função será aplicada
-  .f, #função que será aplicada
-  ... #outros parâmetros da função
+exemplo_de_funcional (
+  x,     # objeto sobre o qual a função será aplicada
+  .f,    # função que será aplicada
+  ...    # outros parâmetros da função
 )
-
 ```
 
->- Repete `f` em cada elemento de `x`
+>- Repete `.f` em cada elemento de `x`
 >- Junta os pedaços depois
+>- ... geralmente são passados para dentro da `.f`
+
+## História
+
+- Funções `apply`, `lapply`, `sapply`
+- Pacote `plyr`
+    - Ainda tem coisas úteis: `.progress` e `.parallel`
+- Futuro
+    - `purrr` terá tudo.
+
+-------------------------------------------------------------
 
 ## Ganho de interpretabilidade
 
 - O que o código abaixo faz?
 
 ```{r, eval=F, echo=T}
-
 tabela_de_dados %>% 
   slice(.$`País`) %>% 
   map(~lm(renda ~ idade))
-
 ```
-
-## No R
-
-
-
-
