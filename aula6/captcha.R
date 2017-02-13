@@ -48,7 +48,7 @@ letras %>%
 
 letras %>%
   ggplot +
-  geom_boxplot(aes(x = fct_reorder(y, comprimento), y = comprimento))
+  geom_boxplot(aes(x = fct_reorder(y, ataque), y = ataque))
 
 
 #---------------------------------------------#
