@@ -100,23 +100,22 @@
 <slide class=''><hgroup><h2>Funções em R</h2></hgroup><article  id="funcoes-em-r">
 
 <ul class = 'build'>
-<li>Utilidade</li>
+<li>Muito úteis</li>
 <li>São objetos
 
 <ul>
 <li>Não pode existir um outro objeto com o mesmo nome</li>
-<li>Iguais a vetores</li>
+<li>Se comportam como vetores</li>
 </ul></li>
 <li>R é uma linguagem funcional</li>
-<li>Funcionais</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Por que devo criar uma função?</h2></hgroup><article  id="por-que-devo-criar-uma-funcao">
 
 <ul class = 'build'>
 <li>Evitar repetições</li>
-<li>Facilia a alteração de códigos</li>
-<li>EVITA ERROS NO COPY/PASTE</li>
+<li>Facilitar alterações de códigos</li>
+<li>EVITAR ERROS NO COPY/PASTE</li>
 <li>Facilitar a interpretabilidade</li>
 </ul>
 
@@ -158,7 +157,7 @@ plota_dose_contra_pressao &lt;- function(dataset){
 <li>Tem uma estrutura básica</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>funcional(
+<pre class = 'prettyprint lang-r'>exemplo_de_funcional(
   x, #objeto sobre o qual a função será aplicada
   .f, #função que será aplicada
   ... #outros parâmetros da função
@@ -168,6 +167,16 @@ plota_dose_contra_pressao &lt;- function(dataset){
 <li>Repete <code>f</code> em cada elemento de <code>x</code></li>
 <li>Junta os pedaços depois</li>
 </ul>
+
+</article></slide><slide class=''><hgroup><h2>Ganho de interpretabilidade</h2></hgroup><article  id="ganho-de-interpretabilidade-2">
+
+<ul>
+<li>O que o código abaixo faz?</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>tabela_de_dados %&gt;% 
+  slice(.$`País`) %&gt;% 
+  map(~lm(renda ~ idade))</pre>
 
 </article></slide><slide class=''><hgroup><h2>No R</h2></hgroup><article  id="no-r"></article></slide>
 
