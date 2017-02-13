@@ -11,18 +11,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Funções em R
 
-> - Utilidade
+> - Muito úteis
 > - São objetos
 >     - Não pode existir um outro objeto com o mesmo nome
->     - Iguais a vetores
+>     - Se comportam como vetores
 > - R é uma linguagem funcional
-> - Funcionais
 
 ## Por que devo criar uma função?
 
 > - Evitar repetições
-> - Facilia a alteração de códigos
-> - EVITA ERROS NO COPY/PASTE
+> - Facilitar alterações de códigos
+> - EVITAR ERROS NO COPY/PASTE
 > - Facilitar a interpretabilidade
 
 ## Ganho de interpretabilidade
@@ -66,7 +65,7 @@ plota_dose_contra_pressao <- function(dataset){
 - Tem uma estrutura básica
 ```{r, eval = FALSE, echo = T}
 
-funcional(
+exemplo_de_funcional(
   x, #objeto sobre o qual a função será aplicada
   .f, #função que será aplicada
   ... #outros parâmetros da função
@@ -76,6 +75,18 @@ funcional(
 
 >- Repete `f` em cada elemento de `x`
 >- Junta os pedaços depois
+
+## Ganho de interpretabilidade
+
+- O que o código abaixo faz?
+
+```{r, eval=F, echo=T}
+
+tabela_de_dados %>% 
+  slice(.$`País`) %>% 
+  map(~lm(renda ~ idade))
+
+```
 
 ## No R
 
