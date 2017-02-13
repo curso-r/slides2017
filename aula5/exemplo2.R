@@ -31,7 +31,6 @@ valores <- map_df(cortes, function(x){
   )
 })
 
-
 ggplot(valores, aes(x = FPR, y = TPR)) + 
   geom_step() + 
   geom_abline(color = 'blue', linetype = 'dashed')

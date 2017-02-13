@@ -1,0 +1,84 @@
+---
+title: "Funcionais"
+author: "F"
+date: "10 de fevereiro de 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Funções em R
+
+> - Utilidade
+> - São objetos
+>     - Não pode existir um outro objeto com o mesmo nome
+>     - Iguais a vetores
+> - R é uma linguagem funcional
+> - Funcionais
+
+## Por que devo criar uma função?
+
+> - Evitar repetições
+> - Facilia a alteração de códigos
+> - EVITA ERROS NO COPY/PASTE
+> - Facilitar a interpretabilidade
+
+## Ganho de interpretabilidade
+
+- O que o código abaixo faz?
+
+```{r, eval=F, echo=T}
+
+tabela_de_dados %>% 
+  remove_linhas_com_na() %>% 
+  transforma_textos_em_fatores() %>% 
+  plota_dose_contra_pressao()
+
+```
+
+## Ganho de interpretabilidade
+
+- O que o código _realmente_ faz:
+
+```{r, eval = F, echo = T}
+
+remove_linhas_com_na <- function(dataset){
+  dataset %>% 
+    filter(complete.cases(.))
+}
+
+transforma_textos_em_fatores <- function(dataset){
+  dataset %>% 
+    mutate_all(is.character, funs(as.factor(.)))
+}
+
+plota_dose_contra_pressao <- function(dataset){
+  ggplot(dataset, aes(x = dose, y = pressao)) +
+    geom_point()
+}
+ 
+```
+
+## Funcionais
+
+- Tem uma estrutura básica
+```{r, eval = FALSE, echo = T}
+
+funcional(
+  x, #objeto sobre o qual a função será aplicada
+  .f, #função que será aplicada
+  ... #outros parâmetros da função
+)
+
+```
+
+>- Repete `f` em cada elemento de `x`
+>- Junta os pedaços depois
+
+## No R
+
+
+
+
