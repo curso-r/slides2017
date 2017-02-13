@@ -126,9 +126,9 @@
 </ul>
 
 <pre class = 'prettyprint lang-r'>tabela_de_dados %&gt;% 
-  remove_linhas_com_na() %&gt;% 
-  transforma_textos_em_fatores() %&gt;% 
-  plota_dose_contra_pressao()</pre>
+  remover_linhas_com_na() %&gt;% 
+  transformar_textos_em_fatores() %&gt;% 
+  plotar_dose_contra_pressao()</pre>
 
 </article></slide><slide class=''><hgroup><h2>Ganho de interpretabilidade</h2></hgroup><article  id="ganho-de-interpretabilidade-1">
 
@@ -136,20 +136,67 @@
 <li>O que o código <em>realmente</em> faz:</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>remove_linhas_com_na &lt;- function(dataset){
+<pre class = 'prettyprint lang-r'>remover_linhas_com_na &lt;- function(dataset) {
   dataset %&gt;% 
     filter(complete.cases(.))
 }
 
-transforma_textos_em_fatores &lt;- function(dataset){
+transformar_textos_em_fatores &lt;- function(dataset) {
   dataset %&gt;% 
     mutate_all(is.character, funs(as.factor(.)))
 }
 
-plota_dose_contra_pressao &lt;- function(dataset){
+plotar_dose_contra_pressao &lt;- function(dataset) {
   ggplot(dataset, aes(x = dose, y = pressao)) +
     geom_point()
 }</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>Princípios / Melhores práticas</h2></hgroup><article  id="principios-melhores-praticas">
+
+<h3>Estilo</h3>
+
+<ul>
+<li>Tudo minúsculo</li>
+<li>Separar por <code>_</code></li>
+<li>Funções são verbos, demais objetos são substantivos.</li>
+</ul>
+
+<h3>Processo de criação</h3>
+
+<ul>
+<li>Uma função faz uma coisa.</li>
+<li>É fácil entender o que uma função faz.</li>
+</ul>
+
+<h3>Funções puras</h3>
+
+<ul>
+<li>Dois tipos</li>
+</ul>
+
+<ol>
+<li>Ou causa um <em>side-effect</em> (salva um arquivo, mostra um gráfico etc).
+
+<ul>
+<li>Pode retornar objetos de forma invisível (e.g. <code>ggplot2</code>)</li>
+</ul></li>
+<li>Ou retorna um objeto.
+
+<ul>
+<li>Facilita se puder combinar com <code>%&gt;%</code>.</li>
+</ul></li>
+</ol>
+
+<h3>Funções anônimas</h3>
+
+<ul>
+<li><code>function(x) x + 2</code></li>
+<li>Vamos ver um jeito de simplificar isso.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
 
 </article></slide><slide class=''><hgroup><h2>Funcionais</h2></hgroup><article  id="funcionais">
 
@@ -157,16 +204,35 @@ plota_dose_contra_pressao &lt;- function(dataset){
 <li>Tem uma estrutura básica</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>exemplo_de_funcional(
-  x, #objeto sobre o qual a função será aplicada
-  .f, #função que será aplicada
-  ... #outros parâmetros da função
+<pre class = 'prettyprint lang-r'>exemplo_de_funcional (
+  x,     # objeto sobre o qual a função será aplicada
+  .f,    # função que será aplicada
+  ...    # outros parâmetros da função
 )</pre>
 
 <ul class = 'build'>
-<li>Repete <code>f</code> em cada elemento de <code>x</code></li>
+<li>Repete <code>.f</code> em cada elemento de <code>x</code></li>
 <li>Junta os pedaços depois</li>
+<li>&#8230; geralmente são passados para dentro da <code>.f</code></li>
 </ul>
+
+</article></slide><slide class=''><hgroup><h2>História</h2></hgroup><article  id="historia">
+
+<ul>
+<li>Funções <code>apply</code>, <code>lapply</code>, <code>sapply</code></li>
+<li>Pacote <code>plyr</code>
+
+<ul>
+<li>Ainda tem coisas úteis: <code>.progress</code> e <code>.parallel</code></li>
+</ul></li>
+<li>Futuro
+
+<ul>
+<li><code>purrr</code> terá tudo.</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
 
 </article></slide><slide class=''><hgroup><h2>Ganho de interpretabilidade</h2></hgroup><article  id="ganho-de-interpretabilidade-2">
 
@@ -176,9 +242,7 @@ plota_dose_contra_pressao &lt;- function(dataset){
 
 <pre class = 'prettyprint lang-r'>tabela_de_dados %&gt;% 
   slice(.$`País`) %&gt;% 
-  map(~lm(renda ~ idade))</pre>
-
-</article></slide><slide class=''><hgroup><h2>No R</h2></hgroup><article  id="no-r"></article></slide>
+  map(~lm(renda ~ idade))</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
