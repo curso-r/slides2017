@@ -1,0 +1,64 @@
+---
+title: "Web Scraping com R"
+author: "Julio Trecenti"
+date: "February 15, 2017"
+output: revealjs::revealjs_presentation
+---
+
+## Web Scraping
+
+### "Raspagem" de dados. Diferente de web crawler
+
+## Web crawling
+
+![](http://robertwdempsey.com/wp-content/uploads/2015/03/webscraping.jpg)
+
+## Web scraping
+
+![](http://altitudelabs.com/blog/content/images/2016/04/web-scraper.png)
+
+## Desafios
+
+### Acessar um conjunto de páginas específicas
+
+- Pode ser **complicado**: 
+    - conhecimento de requisições web
+    - captchas
+    - conteúdo dinâmico
+
+### A partir de página HTML, extrair dados de interesse
+
+- Mais **simples** com o *tidyverse*
+
+## Vantagens
+
+### Automatização de download de bases da web
+
+### Liberdade para obtenção de novos dados
+
+### Análises inéditas -> pré-sal sociológico
+
+## Filosofia
+
+### Se um humano pode fazer, um robô pode fazer
+
+- Existem exceções!
+
+### Dados públicos devem ser acessíveis
+
+- O dado que você quer é mesmo público?
+
+### Cuidado para não onerar sistemas
+
+### Navalha de Occam
+
+- Se existe API, pra quê fazer um robô?
+
+## Requisitos
+
+### Conceitos básicos de requisições web: `GET` e `POST`
+
+### Pacotes `httr`, `xml2` e `rvest`
+
+### XPath e CSS Path
+

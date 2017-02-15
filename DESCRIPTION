@@ -26,7 +26,17 @@ Imports: captchaTJRS,
     magrittr,
     readr,
     GGally,
-    randomForest
+    randomForest,
+    revealjs,
+    httr,
+    rvest,
+    xml2,
+    tjsp,
+    janitor,
+    parallel,
+    foreach,
+    doParallel
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
-         abjur/abjData
+         abjur/abjData,
+         abjur/tjsp
