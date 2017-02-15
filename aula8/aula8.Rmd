@@ -583,7 +583,6 @@ dvec <- function(fun, itens, ..., verbose = TRUE, p = .05) {
 No projeto das câmaras, rodamos o seguinte código:
 
 ```{r eval=FALSE}
-library(magrittr)
 library(tjsp)
 
 sec <- list_secoes_2inst() %>% 
@@ -844,7 +843,7 @@ tipos_decisao <- function(decisoes) {
 partes_apelacoes <- d_partes %>% 
   filter(tipo == 'apelado', str_detect(nome, '[Mm]inist')) %>% 
   mutate(n_processo = str_replace_all(arq, '[^0-9]', '')) %>% 
-  select(n_processo)
+  dplyr::select(n_processo)
 
 decisoes <- d_decisoes %>% 
   mutate(n_processo = str_replace_all(arq, '[^0-9]', '')) %>% 
@@ -852,7 +851,7 @@ decisoes <- d_decisoes %>%
   filter(situacao == 'Julgado') %>% 
   distinct(n_processo, decisao) %>%
   mutate(tipo_decisao = tipos_decisao(decisao)) %>% 
-  select(n_processo, tipo_decisao)
+  dplyr::select(n_processo, tipo_decisao)
 
 library(ggplot2)
 d_cjsg %>%
