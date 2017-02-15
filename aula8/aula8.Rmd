@@ -858,7 +858,7 @@ d_cjsg %>%
   mutate(n_processo = str_replace_all(n_processo, '[^0-9]', '')) %>% 
   inner_join(decisoes, 'n_processo') %>% 
   filter(tipo_decisao != 'outros') %>% 
-  count(orgao_julgador, tipo_decisao) %>%
+  dplyr::count(orgao_julgador, tipo_decisao) %>%
   mutate(ntot = sum(n), prop = n / ntot) %>%
   filter(ntot > 5) %>% 
   ungroup() %>%
