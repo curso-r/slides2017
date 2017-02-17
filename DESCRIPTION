@@ -35,7 +35,8 @@ Imports: captchaTJRS,
     janitor,
     parallel,
     foreach,
-    doParallel
+    doParallel,
+    flexdashboard
 Remotes: platipusc/captchaTJRS,
          yihui/xaringan,
          abjur/abjData,
