@@ -5,14 +5,19 @@ output: html_document
 
 
 # Web Apps no R
-
+- PULL no projeto "slides2017"
+- pasta "aula9"
+- rodar o arquivo "config.R"
 - flexdashboard
- - Exemplo1.Rmd
- - Exemplos na internet
- - Diferença entre Shiny e flexdashboard
+    - Exemplo1.Rmd
+    - Exemplos na internet
+    - Diferença entre Shiny e flexdashboard
 - Shiny
-  - Exemplos da internet
-  - ui/server
-  - ui: estrutura e disposição das coisas, entradas do usuário, saída do servidor.
-  - server: lógica de programação, consome os inputs do usuário e devolve outputs.
-  - par de funções *Output() e render*()
+     - Exemplos da internet
+     - ui/server
+     - ui: estrutura e disposição das coisas, entradas do usuário, saída do servidor.
+     - server: lógica de programação, consome os inputs do usuário e devolve outputs.
+     - par de funções *Output() e render*()
+     - Exercício exemplo2_exercicio
+     - Exemplo3 - ShinyDashboard
+  - Exemplo4 - SPTrans
