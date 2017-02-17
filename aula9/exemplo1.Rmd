@@ -16,9 +16,12 @@ Column {data-width=650}
 
 ### Chart A
 
+[http://rmarkdown.rstudio.com/flexdashboard/examples.html]()
+
 ```{r}
 DT::datatable(mtcars)
 ```
+
 
 Column {data-width=350}
 -----------------------------------------------------------------------
@@ -38,4 +41,7 @@ p <- ggplot(mtcars, aes(x = qsec, y = mpg)) +
   geom_point()
 ggplotly(p)
 ```
+
+
+
 
