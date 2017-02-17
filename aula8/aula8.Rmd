@@ -208,6 +208,7 @@ cdg_anos <- function(anos) {
 }
 
 d_cdg <- cdg_anos(c(2014, 2015))
+d_cdg
 ```
 
 ----------------------------------------------------------------------------------
@@ -283,7 +284,10 @@ sabesp_nm_sistemas <- function(r) {
     html_attr('src') %>% 
     keep(~str_detect(.x, '\\.gif$')) %>% 
     map_chr(~str_match(.x, '/(.+)\\.gif')[, 2])
+  nomes
 }
+
+sabesp_nm_sistemas(result)
 ```
 
 ## Passo 5: pegar conteúdo da página
@@ -341,18 +345,19 @@ sabesp_dias <- function(datas) {
 
 # exemplo
 dts <- as.Date('2017-02-14') - lubridate::days(0:13 * 30)
+
 d_sabesp <- sabesp_dias(dts)
 
 library(ggplot2)
 d_sabesp %>% 
   filter(titulo == 'volume armazenado') %>% 
   mutate(data = ymd(data)) %>% 
-  ggplot(aes(x = data, y = info, colour = lugar)) +
+  ggplot( aes(x = data, y = info, colour = lugar)) +
   geom_line() +
   theme_bw()
 ```
 
-----------------------------------------------------------------------------------
+----------------------------------------------------
 
 # Case study: câmaras TJSP (jurimetria)
 
@@ -447,6 +452,7 @@ uma que faz a busca e outra que acessa uma página específica
 (que será executada várias vezes). 
 Utilizaremos as funções `cjsg` e `cjsg_pag`.
 
+
 ```{r eval=FALSE}
 cjsg_session <- function() {
   rvest::html_session('http://esaj.tjsp.jus.br/cjsg/consultaCompleta.do')
@@ -457,12 +463,21 @@ cjsg_session <- function() {
 cjsg <- function(s, parms = cjsg_parms(s), path = './cjsg', 
                  max_pag = 10, overwrite = FALSE,
                  verbose = TRUE, p = .05) {
+  
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  
   if (!file.exists(path)) stop(sprintf('Pasta não "%s" pôde ser criada', path))
+  
   r0 <- s %>% 
     rvest::submit_form(parms)
+  
   n_pags <- if (is.na(max_pag) || is.infinite(max_pag)) cjsg_npags(r0) else max_pag
-  abjutils::dvec(cjsg_pag, 1:n_pags, path = path, ow = overwrite, s = s)
+  
+  abjutils::dvec(cjsg_pag, 
+                 1:n_pags, 
+                 path = path, 
+                 ow = overwrite, 
+                 s = s)
 }
 ```
 
@@ -473,8 +488,11 @@ cjsg_pag <- function(pag, path, ow, s) {
   u_pag <- sprintf(u, pag)
   arq <- sprintf('%s/%05d.html', path, pag)
   if (!file.exists(arq) || ow) {
-    httr::GET(u_pag, httr::write_disk(arq, overwrite = ow), 
+    
+    httr::GET(u_pag, 
+              httr::write_disk(arq, overwrite = ow), 
               handle = s$handle)
+    
     tibble::data_frame(result = 'OK')
   } else {
     tibble::data_frame(result = 'já existe')
@@ -583,6 +601,8 @@ dvec <- function(fun, itens, ..., verbose = TRUE, p = .05) {
 No projeto das câmaras, rodamos o seguinte código:
 
 ```{r eval=FALSE}
+# devtools::install_github('abjur/abjutils')
+
 library(tjsp)
 
 sec <- list_secoes_2inst() %>% 

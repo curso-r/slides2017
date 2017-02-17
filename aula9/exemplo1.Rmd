@@ -16,7 +16,7 @@ Column {data-width=650}
 
 ### Chart A
 
-[http://rmarkdown.rstudio.com/flexdashboard/examples.html]()
+[http://rmarkdown.rstudio.com/flexdashboard/examples.html](http://rmarkdown.rstudio.com/flexdashboard/examples.html)
 
 ```{r}
 DT::datatable(mtcars)

@@ -3,8 +3,24 @@
 library(sptrans)
 library(shinydashboard)
 library(leaflet)
+library(stringr)
 library(dplyr)
 
+draw_bus2 <- function (.data, map = NULL) {
+  if (is.null(map)) {
+    map <- leaflet::leaflet() %>% leaflet::addTiles()
+  }
+  trips <- unique(.data$trip_id)
+  for (i in seq_along(trips)) {
+    d <- dplyr::filter(.data, trip_id == trips[i])
+    map <- map %>% leaflet::addMarkers(~px, ~py, data = d)
+  }
+  map
+}
+
+
+
+# UI ------------------------------#
 ui <- dashboardPage(
   dashboardHeader(title = "Mapinha do SPTrans"),
   dashboardSidebar(
@@ -23,12 +39,13 @@ ui <- dashboardPage(
       tabItem("mapa",
               box(width = 2, numericInput("n_ps", "Número de ônibus", 1, 1, 15),
                   actionButton("atualizar", "Atualizar")),
-              leafletOutput("mapa_leaflet")
+              leafletOutput("mapa_leaflet", height = 800)
       )
     )
   )
 )
 
+# Server ----------------------------#
 server <- function(input, output) {
   
   dados <- reactive({
