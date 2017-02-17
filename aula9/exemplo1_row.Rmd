@@ -1,0 +1,47 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(plotly)
+```
+
+row
+-----------------------------------------------------------------------
+
+### Chart A
+
+[http://rmarkdown.rstudio.com/flexdashboard/examples.html](http://rmarkdown.rstudio.com/flexdashboard/examples.html)
+
+```{r}
+DT::datatable(mtcars)
+```
+
+
+row
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+p <- ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  geom_point()
+ggplotly(p)
+```
+
+### Chart C
+
+```{r}
+p <- ggplot(mtcars, aes(x = qsec, y = mpg)) + 
+  geom_point()
+ggplotly(p)
+```
+
+
+
+

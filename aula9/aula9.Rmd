@@ -1,0 +1,18 @@
+---
+title: "Aula 9 - Roteiro"
+output: html_document
+---
+
+
+# Web Apps no R
+
+- flexdashboard
+ - Exemplo1.Rmd
+ - Exemplos na internet
+ - Diferença entre Shiny e flexdashboard
+- Shiny
+  - Exemplos da internet
+  - ui/server
+  - ui: estrutura e disposição das coisas, entradas do usuário, saída do servidor.
+  - server: lógica de programação, consome os inputs do usuário e devolve outputs.
+  - par de funções *Output() e render*()
