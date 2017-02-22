@@ -153,11 +153,7 @@ $(document).ready(function () {
 <h3>Principais funções do <code>rvest</code></h3>
 <pre class="r"><code>library(rvest)</code></pre>
 <pre><code>## Loading required package: xml2</code></pre>
-<pre><code>## 
-## Attaching package: &#39;rvest&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:readr&#39;:
-## 
-##     guess_encoding</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
 <p><strong>Para acessar páginas da web:</strong></p>
 <ul>
 <li><code>html_session()</code> abre uma sessão do usuário (baixa página, carrega cookies etc).</li>
@@ -792,7 +788,6 @@ decisoes &lt;- d_decisoes %&gt;%
   mutate(tipo_decisao = tipos_decisao(decisao)) %&gt;% 
   dplyr::select(n_processo, tipo_decisao)
 
-library(ggplot2)
 d_cjsg %&gt;%
   mutate(n_processo = str_replace_all(n_processo, &#39;[^0-9]&#39;, &#39;&#39;)) %&gt;% 
   inner_join(decisoes, &#39;n_processo&#39;) %&gt;% 
