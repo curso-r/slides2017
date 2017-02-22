@@ -141,7 +141,7 @@ uso do pacote `parallel` junto com o `plyr`
 
 ## Criando um cluster (backend)
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
+```{r warning=FALSE, message=FALSE}
 library(parallel)
 library(foreach)
 library(doParallel)
@@ -151,13 +151,13 @@ registerDoParallel(c)
 
 ## Usando o cluster por meio do pacote plyr
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
+```{r warning=FALSE, message=FALSE}
 library(plyr)
 system.time(l_ply(1:5, .fun = function(x) {Sys.sleep(1)}, 
                   .parallel = TRUE))
 ```
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
+```{r warning=FALSE, message=FALSE}
 system.time(l_ply(1:5, .fun = function(x) {Sys.sleep(1)}, 
                   .parallel = FALSE))
 stopCluster(c)
