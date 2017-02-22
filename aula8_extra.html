@@ -293,7 +293,7 @@ c &lt;-<span class="st"> </span><span class="kw">makePSOCKcluster</span>(<span c
 <span class="kw">system.time</span>(<span class="kw">l_ply</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">.fun =</span> function(x) {<span class="kw">Sys.sleep</span>(<span class="dv">1</span>)}, 
                   <span class="dt">.parallel =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.028   0.000   3.254</code></pre>
+##   0.028   0.000   3.228</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(<span class="kw">l_ply</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">.fun =</span> function(x) {<span class="kw">Sys.sleep</span>(<span class="dv">1</span>)}, 
                   <span class="dt">.parallel =</span> <span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 

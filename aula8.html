@@ -259,7 +259,8 @@ cdg_html &lt;- cdg_url %&gt;%
     purrr::map_df(cdg_ano_safe, .id = &#39;ano&#39;)
 }
 
-d_cdg &lt;- cdg_anos(c(2014, 2015))</code></pre>
+d_cdg &lt;- cdg_anos(c(2014, 2015))
+d_cdg</code></pre>
 <hr />
 </div>
 </div>
@@ -325,7 +326,10 @@ result &lt;- POST(link, body = form)</code></pre>
     html_attr(&#39;src&#39;) %&gt;% 
     keep(~str_detect(.x, &#39;\\.gif$&#39;)) %&gt;% 
     map_chr(~str_match(.x, &#39;/(.+)\\.gif&#39;)[, 2])
-}</code></pre>
+  nomes
+}
+
+sabesp_nm_sistemas(result)</code></pre>
 </div>
 <div id="passo-5-pegar-conteudo-da-pagina" class="section level2">
 <h2>Passo 5: pegar conteúdo da página</h2>
@@ -376,13 +380,14 @@ sabesp_dia(&#39;2017-02-14&#39;)</code></pre>
 
 # exemplo
 dts &lt;- as.Date(&#39;2017-02-14&#39;) - lubridate::days(0:13 * 30)
+
 d_sabesp &lt;- sabesp_dias(dts)
 
 library(ggplot2)
 d_sabesp %&gt;% 
   filter(titulo == &#39;volume armazenado&#39;) %&gt;% 
   mutate(data = ymd(data)) %&gt;% 
-  ggplot(aes(x = data, y = info, colour = lugar)) +
+  ggplot( aes(x = data, y = info, colour = lugar)) +
   geom_line() +
   theme_bw()</code></pre>
 <hr />
@@ -417,7 +422,7 @@ d_sabesp %&gt;%
 <li>Muitas buscas e muitas paginações por busca.</li>
 </ul>
 <p>No TJSP temos <em>uma busca e muitas paginações</em>. Acesse a página do <a href="http://esaj.tjsp.jus.br/cjsg/consultaCompleta.do">e-SAJ</a>, digite “acordam” no campo “Pesquisa Livre” e clique em “Pesquisar”, para ter uma ideia de como é essa página.</p>
-<p>A página (acessada no dia 2017-02-15) é uma ferramenta de busca com vários campos, que não permite pesquisa com dados em branco. Na parte de baixo o site mostra uma série de documentos, organizados em páginas de vinte em vinte resultados.</p>
+<p>A página (acessada no dia 2017-02-22) é uma ferramenta de busca com vários campos, que não permite pesquisa com dados em branco. Na parte de baixo o site mostra uma série de documentos, organizados em páginas de vinte em vinte resultados.</p>
 <p>Para realizar a coleta, precisamos de duas funções principais, uma que faz a busca e outra que acessa uma página específica (que será executada várias vezes). Utilizaremos as funções <code>cjsg</code> e <code>cjsg_pag</code>.</p>
 <pre class="r"><code>cjsg_session &lt;- function() {
   rvest::html_session(&#39;http://esaj.tjsp.jus.br/cjsg/consultaCompleta.do&#39;)
@@ -425,12 +430,21 @@ d_sabesp %&gt;%
 <pre class="r"><code>cjsg &lt;- function(s, parms = cjsg_parms(s), path = &#39;./cjsg&#39;, 
                  max_pag = 10, overwrite = FALSE,
                  verbose = TRUE, p = .05) {
+  
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  
   if (!file.exists(path)) stop(sprintf(&#39;Pasta não &quot;%s&quot; pôde ser criada&#39;, path))
+  
   r0 &lt;- s %&gt;% 
     rvest::submit_form(parms)
+  
   n_pags &lt;- if (is.na(max_pag) || is.infinite(max_pag)) cjsg_npags(r0) else max_pag
-  abjutils::dvec(cjsg_pag, 1:n_pags, path = path, ow = overwrite, s = s)
+  
+  abjutils::dvec(cjsg_pag, 
+                 1:n_pags, 
+                 path = path, 
+                 ow = overwrite, 
+                 s = s)
 }</code></pre>
 <pre class="r"><code>cjsg_pag &lt;- function(pag, path, ow, s) {
   Sys.sleep(1)
@@ -438,8 +452,11 @@ d_sabesp %&gt;%
   u_pag &lt;- sprintf(u, pag)
   arq &lt;- sprintf(&#39;%s/%05d.html&#39;, path, pag)
   if (!file.exists(arq) || ow) {
-    httr::GET(u_pag, httr::write_disk(arq, overwrite = ow), 
+    
+    httr::GET(u_pag, 
+              httr::write_disk(arq, overwrite = ow), 
               handle = s$handle)
+    
     tibble::data_frame(result = &#39;OK&#39;)
   } else {
     tibble::data_frame(result = &#39;já existe&#39;)
@@ -512,7 +529,9 @@ dvec &lt;- function(fun, itens, ..., verbose = TRUE, p = .05) {
     dplyr::ungroup()
 }</code></pre>
 <p>No projeto das câmaras, rodamos o seguinte código:</p>
-<pre class="r"><code>library(tjsp)
+<pre class="r"><code># devtools::install_github(&#39;abjur/abjutils&#39;)
+
+library(tjsp)
 
 sec &lt;- list_secoes_2inst() %&gt;% 
   dplyr::filter(stringr::str_detect(secao, &#39;[Cc]rim&#39;),
