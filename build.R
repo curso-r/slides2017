@@ -24,5 +24,4 @@ for (arq in list.files(pattern = "\\.Rmd$", recursive = T, full.names = T)){
   }
 }
 
-list.files(pattern = "\\.html$", recursive = T, full.names = T) %>% 
-  file.copy(htmls)
+file.copy(list.files(pattern = "\\.html$", recursive = T, full.names = T), htmls)
