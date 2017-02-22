@@ -81,6 +81,7 @@ Outras funções úteis:
 
 ```{r}
 library(rvest)
+library(ggplot2)
 ```
 
 **Para acessar páginas da web:**
@@ -873,7 +874,6 @@ decisoes <- d_decisoes %>%
   mutate(tipo_decisao = tipos_decisao(decisao)) %>% 
   dplyr::select(n_processo, tipo_decisao)
 
-library(ggplot2)
 d_cjsg %>%
   mutate(n_processo = str_replace_all(n_processo, '[^0-9]', '')) %>% 
   inner_join(decisoes, 'n_processo') %>% 

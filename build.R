@@ -19,7 +19,7 @@ for (arq in list.files(pattern = "\\.Rmd$", recursive = T, full.names = T)){
   pkgs <- paste('package:', pkgs, sep = "")
   if (pkgs[1] != 'package:') {
     try({
-      invisible(lapply(pkgs, detach, character.only = TRUE, unload = TRUE))
+      invisible(lapply(pkgs, detach, character.only = TRUE, unload = FALSE))
     })
   }
 }
